@@ -33,9 +33,9 @@ namespace KINECT_APPLICATION
         // Create a singleton database connection object
         private DatabaseConnection _databaseConnection = DatabaseConnection.getDatabaseConnection();
         // Create a doctor object
-        private Doctor _doctor = null;
+        private Person _doctor = null;
 
-        internal SelectDoctorUserControl(Doctor doctor)
+        internal SelectDoctorUserControl(Person doctor)
         {
             InitializeComponent();
 
@@ -86,7 +86,7 @@ namespace KINECT_APPLICATION
             // Get the patient id whose index value is 0
             String patientID = dataRow.Row.ItemArray[0].ToString();
             // Select the patient from the database according to the patient id
-            Patient patient = _databaseConnection.SelectPatient(patientID);
+            Person patient = _databaseConnection.SelectPatient(patientID);
 
             // Delete the children of the main window content
             MainWindow.MainWindowContent.Children.Clear();
@@ -192,7 +192,7 @@ namespace KINECT_APPLICATION
         private void UpdateDoctor_Click(object sender, RoutedEventArgs e)
         {
             // Create a doctor object that is going to be updated
-            Doctor doctor = new Doctor();
+            Person doctor = new Person();
             // Get the doctor id
             doctor.Id = _doctor.Id;
             // Get the doctor name

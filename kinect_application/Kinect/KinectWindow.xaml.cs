@@ -26,9 +26,9 @@ namespace KINECT_APPLICATION
         // Create a singleton database connection object
         private DatabaseConnection _databaseConnection = DatabaseConnection.getDatabaseConnection();
         // Create a doctor object
-        private Doctor _doctor = null;
+        private Person _doctor = null;
         // Create a patient object
-        private Patient _patient = null;
+        private Person _patient = null;
         // Create a task object
         private Task _task = null;
 
@@ -40,7 +40,7 @@ namespace KINECT_APPLICATION
         private List<BodyJoints> _bodyJointsList;
         private MultiSourceFrameReader _multiSourceFrameReader;
 
-        internal KinectWindow(Doctor doctor, Patient patient, Task task)
+        internal KinectWindow(Person doctor, Person patient, Task task)
         {
             InitializeComponent();
 
@@ -273,9 +273,9 @@ namespace KINECT_APPLICATION
 
                                                     ColorSpacePoint colorPoint = _kinectSensor.CoordinateMapper.MapCameraPointToColorSpace(bodyJoint.Value.Position);
                                                     // WARNING be careful about resolution ratio
-                                                    newJ.Position.X = float.IsInfinity(colorPoint.X) ? 0 : (colorPoint.X / 3.75f);
+                                                    newJ.Position.X = float.IsInfinity(colorPoint.X) ? 0 : (colorPoint.X / (float)(1920 / eCanvas.Width));
                                                     // WARNING be careful about resolution ratio
-                                                    newJ.Position.Y = float.IsInfinity(colorPoint.Y) ? 0 : (colorPoint.Y / 2.55f);
+                                                    newJ.Position.Y = float.IsInfinity(colorPoint.Y) ? 0 : (colorPoint.Y / (float)(1080 / eCanvas.Height));
 
                                                     bodyJoints.BodyJointsDictionary.Add(bodyJoint.Key.ToString(), newJ);
 
@@ -359,7 +359,7 @@ namespace KINECT_APPLICATION
 
             BitmapSource bitmap = BitmapSource.Create(width, height, 96, 96, format, null, pixels, stride);
 
-            ScaleTransform scale = new ScaleTransform((512.0 / bitmap.PixelWidth), (424.0 / bitmap.PixelHeight));
+            ScaleTransform scale = new ScaleTransform((eCanvas.Width / bitmap.PixelWidth), (eCanvas.Height / bitmap.PixelHeight));
 
             TransformedBitmap tbitmap = new TransformedBitmap(bitmap, scale);
 

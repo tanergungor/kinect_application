@@ -32,15 +32,15 @@ namespace KINECT_APPLICATION
         // Create a singleton database connection object
         private DatabaseConnection _databaseConnection = DatabaseConnection.getDatabaseConnection();
         // Create a doctor object
-        private Doctor _doctor = null;
+        private Person _doctor = null;
         // Create a patient object
-        private Patient _patient = null;
+        private Person _patient = null;
 
         private Double _pain = 0;
         private Double _fatigue = 0;
         private Double _mood = 0;
 
-        internal SelectPatientUserControl(Doctor doctor, Patient patient)
+        internal SelectPatientUserControl(Person doctor, Person patient)
         {
             InitializeComponent();
 
@@ -251,7 +251,7 @@ namespace KINECT_APPLICATION
         private void UpdatePatient_Click(object sender, RoutedEventArgs e)
         {
             // Create a patient object that is going to be updated
-            Patient patient = new Patient();
+            Person patient = new Person();
             // Get the patient id
             patient.Id = _patient.Id;
             // Get the patient name

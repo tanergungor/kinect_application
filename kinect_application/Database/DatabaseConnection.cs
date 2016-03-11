@@ -50,9 +50,9 @@ namespace KINECT_APPLICATION.DB
 
 
 
-        public Doctor Login(String doctorEmail, String doctorPassword)
+        public Person Login(String doctorEmail, String doctorPassword)
         {
-            Doctor doctor = new Doctor();
+            Person doctor = new Person();
 
             try
             {
@@ -115,9 +115,9 @@ namespace KINECT_APPLICATION.DB
 
 
 
-        public Doctor SelectDoctor(String doctorID)
+        public Person SelectDoctor(String doctorID)
         {
-            Doctor doctor = new Doctor();
+            Person doctor = new Person();
 
             try
             {
@@ -181,7 +181,7 @@ namespace KINECT_APPLICATION.DB
 
 
 
-        public Boolean UpdatePatient(Patient patient)
+        public Boolean UpdatePatient(Person patient)
         {
             try
             {
@@ -214,7 +214,7 @@ namespace KINECT_APPLICATION.DB
 
 
 
-        public Boolean UpdateDoctor(Doctor doctor)
+        public Boolean UpdateDoctor(Person doctor)
         {
             try
             {
@@ -261,9 +261,9 @@ namespace KINECT_APPLICATION.DB
 
 
 
-        public Patient SelectPatient(String patientID)
+        public Person SelectPatient(String patientID)
         {
-            Patient patient = new Patient();
+            Person patient = new Person();
 
             try
             {
@@ -334,7 +334,7 @@ namespace KINECT_APPLICATION.DB
 
 
 
-        public Boolean InsertPatient(Patient patient)
+        public Boolean InsertPatient(Person patient)
         {
             try
             {

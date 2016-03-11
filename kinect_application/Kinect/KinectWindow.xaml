@@ -5,42 +5,42 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KINECT_APPLICATION"
         mc:Ignorable="d"
-        Title="KINECT WINDOW" Icon="pack://application:,,,/Resources/Icon.png" Width="1200" Height="768" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        Title="KINECT WINDOW" Icon="pack://application:,,,/Resources/Icon.png" Width="1470" Height="605" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
 
-    <StackPanel Margin="50" HorizontalAlignment="Center">
+    <StackPanel Margin="10" HorizontalAlignment="Center">
 
-        <StackPanel Orientation="Horizontal">
-            <Label Width="150" Content="Kinect Status" />
-            <Label Name="Status" Width="212" Content="Not Connected" Foreground="Red" />
-            <Button Name="Connect" Width="150" Click="Connect_Click">Connect</Button>
-        </StackPanel>
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
 
-        <StackPanel Orientation="Horizontal" Margin="0,10,0,10">
-
-            <Canvas Background="LightBlue" Name="oCanvas" Width="512" Height="424" Margin="0,0,50,0">
-                <Image Name="oCamera" Width="512" Height="424" />
+            <Canvas Background="LightBlue" Name="oCanvas" Width="720" Height="405" Margin="0,0,10,0">
+                <Image Name="oCamera" Width="720" Height="405" />
             </Canvas>
 
-            <Canvas Background="LightBlue" Name="eCanvas" Width="512" Height="424">
-                <Image Name="eCamera" Width="512" Height="424" />
+            <Canvas Background="LightBlue" Name="eCanvas" Width="720" Height="405">
+                <Image Name="eCamera" Width="720" Height="405" />
             </Canvas>
 
         </StackPanel>
 
-
         <StackPanel Orientation="Horizontal">
 
-            <ListBox IsEnabled="False" SelectionChanged="SelectionChanged" Width="250" Height="130" Name="taskContent" Margin="0,0,10,0" />
+            <ListBox IsEnabled="False" SelectionChanged="SelectionChanged" Width="460" Height="130" Name="taskContent" Margin="0,0,10,0" />
 
-            <StackPanel Orientation="Vertical" Margin="0,0,50,0">
+            <StackPanel Orientation="Vertical" Margin="0,0,10,0">
                 <Button Click="Start_Click" Name="Start" IsEnabled="False" Background="White" Height="25" Width="250" Margin="0,0,0,10">Start</Button>
                 <Button Click="Stop_Click" Name="Stop" IsEnabled="False" Background="White" Height="25" Width="250" Margin="0,0,0,10">Stop</Button>
                 <Button Click="Replay_Click" Name="Replay" IsEnabled="False" Background="White" Height="25" Width="250" Margin="0,0,0,10">Replay</Button>
                 <Button Click="Exit_Click" Background="White" Height="25" Width="250">Exit</Button>
             </StackPanel>
 
-
             <StackPanel Orientation="Vertical">
+                
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                    <Label Width="150" Content="Kinect Status" />
+                    <Label Name="Status" Width="212" Content="Not Connected" Foreground="Red" />
+                    <Button Name="Connect" Width="150" Click="Connect_Click">Connect</Button>
+                </StackPanel>
+                
+                <!--
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
                     <Label Width="150">SPINE BASE</Label>
                     <Label Width="100">X:</Label>
@@ -48,6 +48,7 @@
                     <Label Width="100">Y:</Label>
                     <Label Width="100" Name="SpineBaseY"></Label>
                 </StackPanel>
+                
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
                     <Label Width="150">SPINE SHOULDER</Label>
                     <Label Width="100">X:</Label>
@@ -55,12 +56,16 @@
                     <Label Width="100">Y:</Label>
                     <Label Width="100" Name="SpineShoulderY"></Label>
                 </StackPanel>
+                
                 <StackPanel Orientation="Horizontal">
                     <Label Width="150">ANGLE</Label>
                     <Label Width="100" Name="Angle"></Label>
                 </StackPanel>
+-->
             </StackPanel>
-
+            
         </StackPanel>
+        
     </StackPanel>
+    
 </Window>

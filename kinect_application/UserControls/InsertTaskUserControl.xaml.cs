@@ -24,11 +24,11 @@ namespace KINECT_APPLICATION.UserControls
         // Create a singleton database connection object
         private DatabaseConnection _databaseConnection = DatabaseConnection.getDatabaseConnection();
         // Create a doctor object
-        private Doctor _doctor = null;
+        private Person _doctor = null;
         // Create a patient object
-        private Patient _patient = null;
+        private Person _patient = null;
 
-        internal InsertTaskUserControl(Doctor doctor, Patient patient)
+        internal InsertTaskUserControl(Person doctor, Person patient)
         {
             InitializeComponent();
 

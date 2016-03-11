@@ -64,8 +64,7 @@
     <Compile Include="Database\DatabaseConnection.cs" />
     <Compile Include="DataStructures\BodyJoints.cs" />
     <Compile Include="DataStructures\Exercise.cs" />
-    <Compile Include="DataStructures\Patient.cs" />
-    <Compile Include="DataStructures\Doctor.cs" />
+    <Compile Include="DataStructures\Person.cs" />
     <Compile Include="DataStructures\Task.cs" />
     <Compile Include="Kinect\KinectWindow.xaml.cs">
       <DependentUpon>KinectWindow.xaml</DependentUpon>

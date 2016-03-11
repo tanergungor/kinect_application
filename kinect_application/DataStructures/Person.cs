@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace KINECT_APPLICATION.DataStructures
 {
-    class Patient
+    class Person
     {
         private String _id;
         private String _name;
@@ -19,7 +19,7 @@ namespace KINECT_APPLICATION.DataStructures
         private String _height;
         private String _weight;
 
-        public Patient()
+        public Person()
         {
         }
 

@@ -31,11 +31,11 @@ namespace KINECT_APPLICATION
         // Create a singleton database connection object
         private DatabaseConnection _databaseConnection = DatabaseConnection.getDatabaseConnection();
         // Create a doctor object
-        private Doctor _doctor = null;
+        private Person _doctor = null;
 
         private String _filename = null;
 
-        internal InsertPatientUserControl(Doctor doctor)
+        internal InsertPatientUserControl(Person doctor)
         {
             InitializeComponent();
 
@@ -83,7 +83,7 @@ namespace KINECT_APPLICATION
         private void InsertPatient_Click(object sender, RoutedEventArgs e)
         {
             // Create a patient object that is going to be inserted
-            Patient patient = new Patient();
+            Person patient = new Person();
             // Get the patient name
             patient.Name = Name.Text.ToString();
             // Get the patient surname

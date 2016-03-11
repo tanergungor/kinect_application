@@ -37,7 +37,7 @@ namespace KINECT_APPLICATION
             {
                 // Check if the doctor exists in the database or not
                 // If it exists, get the information
-                Doctor doctor = _databaseConnection.Login(Email.Text, Password.Password);
+                Person doctor = _databaseConnection.Login(Email.Text, Password.Password);
 
                 // If the doctor exists in the system, then log in to the system
                 if (doctor.Id != null)
