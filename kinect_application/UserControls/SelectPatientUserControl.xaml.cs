@@ -20,6 +20,7 @@ using KINECT_APPLICATION.DB;
 using KINECT_APPLICATION.DataStructures;
 using KINECT_APPLICATION.UserControls;
 using System.Threading;
+using System.IO;
 
 namespace KINECT_APPLICATION
 {
@@ -51,6 +52,8 @@ namespace KINECT_APPLICATION
             Name.Text = _patient.Name;
             // Set the patient surname
             Surname.Text = _patient.Surname;
+            // Set the patient photo
+            Photo.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/PHOTOS/" + _patient.Id + ".png"));
             // Set the patient height
             Phone.Text = _patient.Phone;
             // Set the patient weight
@@ -212,6 +215,38 @@ namespace KINECT_APPLICATION
             window.Show();
         }
 
+
+
+
+
+
+
+
+
+
+
+
+
+        private void LoadImage_Click(object sender, RoutedEventArgs e)
+        {
+            // Create Open File Dialog 
+            Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog();
+
+            // Set filter for file extension and default file extension
+            openFileDialog.Filter = "PNG Files (*.png)|*.png";
+
+            // Display OpenFileDialog by calling ShowDialog method 
+            Nullable<bool> result = openFileDialog.ShowDialog();
+
+            // Get the selected file name and display in a TextBox 
+            if (result == true)
+            {
+                _patient.Photo = openFileDialog.FileName;
+
+                Photo.Source = new BitmapImage(new Uri(openFileDialog.FileName));
+            }
+        }
+
         // WARNING:: CHECK EMPTY FIELDS!
         private void UpdatePatient_Click(object sender, RoutedEventArgs e)
         {
@@ -242,6 +277,13 @@ namespace KINECT_APPLICATION
             // If the patient's information is updated
             if (IsUpdated)
             {
+                using (var fileStream = new FileStream(System.IO.Path.Combine("C:/Users/Taner/Desktop/kinect_application/kinect_application/Resources/PHOTOS/", _patient.Id + ".png"), FileMode.Create))
+                {
+                    BitmapEncoder encoder = new PngBitmapEncoder();
+                    encoder.Frames.Add(BitmapFrame.Create(new Uri(_patient.Photo)));
+                    encoder.Save(fileStream);
+                }
+
                 // If the patient's information is updated, show the message
                 MessageBox.Show("UPDATE: Successful - The patient's information is updated!");
                 // Delete the children of the main window content

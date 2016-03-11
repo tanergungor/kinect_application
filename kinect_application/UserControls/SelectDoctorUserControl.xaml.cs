@@ -20,6 +20,8 @@ using MySql.Data.MySqlClient;
 using System.Configuration;
 using KINECT_APPLICATION.DataStructures;
 using KINECT_APPLICATION.DB;
+using System.IO;
+using System.Reflection;
 
 namespace KINECT_APPLICATION
 {
@@ -43,6 +45,8 @@ namespace KINECT_APPLICATION
             Name.Text = _doctor.Name;
             // Set the doctor surname
             Surname.Text = _doctor.Surname;
+            // Set the doctor photo
+            Photo.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/PHOTOS/" + _doctor.Id + ".png"));
             // Set the doctor phone
             Phone.Text = _doctor.Phone;
             // Set the doctor e-mail
@@ -111,16 +115,19 @@ namespace KINECT_APPLICATION
                 // Get the selected row from the patient list
                 DataRowView dataRow = (DataRowView)patientList.SelectedItem;
                 // Get the patient id whose index value is 0
-                String patientID = dataRow.Row.ItemArray[0].ToString();
+                String patientId = dataRow.Row.ItemArray[0].ToString();
 
                 // Delete the patient from the database
-                Boolean IsDeleted = _databaseConnection.DeletePatient(patientID);
+                Boolean IsDeleted = _databaseConnection.DeletePatient(patientId);
                 // Select all the patients from the database and set them to the list
                 _databaseConnection.SelectPatients(patientList);
 
                 // Check if the patient is deleted
                 if (IsDeleted)
                 {
+                    // Delete the patient photo 
+                    File.Delete(System.IO.Path.Combine("C:/Users/Taner/Desktop/kinect_application/kinect_application/Resources/PHOTOS/", patientId + ".png"));
+
                     // If the patient is deleted, show the message
                     MessageBox.Show("DELETE: Successful - The patient is deleted!");
                 }
@@ -131,8 +138,6 @@ namespace KINECT_APPLICATION
                 }
             }
         }
-
-
 
 
 
@@ -158,6 +163,27 @@ namespace KINECT_APPLICATION
 
 
 
+
+
+        private void LoadImage_Click(object sender, RoutedEventArgs e)
+        {
+            // Create Open File Dialog 
+            Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog();
+
+            // Set filter for file extension and default file extension
+            openFileDialog.Filter = "PNG Files (*.png)|*.png";
+
+            // Display OpenFileDialog by calling ShowDialog method 
+            Nullable<bool> result = openFileDialog.ShowDialog();
+
+            // Get the selected file name and display in a TextBox 
+            if (result == true)
+            {
+                _doctor.Photo = openFileDialog.FileName;
+
+                Photo.Source = new BitmapImage(new Uri(openFileDialog.FileName));
+            }
+        }
 
 
 
@@ -188,6 +214,13 @@ namespace KINECT_APPLICATION
             // If the doctor's information is updated
             if (IsUpdated)
             {
+                using (var fileStream = new FileStream(System.IO.Path.Combine("C:/Users/Taner/Desktop/kinect_application/kinect_application/Resources/PHOTOS/", _doctor.Id + ".png"), FileMode.Create))
+                {
+                    BitmapEncoder encoder = new PngBitmapEncoder();
+                    encoder.Frames.Add(BitmapFrame.Create(new Uri(_doctor.Photo)));
+                    encoder.Save(fileStream);
+                }
+
                 // If the doctor's information is updated, show the message
                 MessageBox.Show("UPDATE: Successful - The doctor's information is updated!");
                 // Delete the children of the main window content

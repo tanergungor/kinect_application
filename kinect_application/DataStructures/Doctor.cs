@@ -11,6 +11,7 @@ namespace KINECT_APPLICATION.DataStructures
         private String _id;
         private String _name;
         private String _surname;
+        private String _photo;
         private String _phone;
         private String _email;
         private DateTime _birthdate;
@@ -56,6 +57,19 @@ namespace KINECT_APPLICATION.DataStructures
             set
             {
                 _surname = value;
+            }
+        }
+
+        public string Photo
+        {
+            get
+            {
+                return _photo;
+            }
+
+            set
+            {
+                _photo = value;
             }
         }
 

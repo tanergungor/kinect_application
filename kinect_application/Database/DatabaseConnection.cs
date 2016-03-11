@@ -74,6 +74,8 @@ namespace KINECT_APPLICATION.DB
                         // Get the current patient's surname
                         doctor.Surname = reader["person_surname"].ToString();
 
+                        doctor.Photo = "pack://application:,,,/Resources/PHOTOS/" + doctor.Id + ".png";
+
                         // Get the current patient's phone
                         doctor.Phone = reader["person_phone"].ToString();
 
@@ -136,6 +138,8 @@ namespace KINECT_APPLICATION.DB
 
                         // Get the current doctor's surname
                         doctor.Surname = reader["person_surname"].ToString();
+
+                        doctor.Photo = "pack://application:,,,/Resources/PHOTOS/" + doctor.Id + ".png";
 
                         // Get the current doctor's phone
                         doctor.Phone = reader["person_phone"].ToString();
@@ -281,6 +285,8 @@ namespace KINECT_APPLICATION.DB
                         // Get the current patient's surname
                         patient.Surname = reader["person_surname"].ToString();
 
+                        patient.Photo = "pack://application:,,,/Resources/PHOTOS/" + patient.Id + ".png";
+
                         // Get the current patient's phone
                         patient.Phone = reader["person_phone"].ToString();
 
@@ -357,8 +363,32 @@ namespace KINECT_APPLICATION.DB
             return false;
         }
 
+        public String SelectLastInsertedPatient()
+        {
+            try
+            {
+                _connection.Open();
 
+                MySqlCommand command = new MySqlCommand("SELECT MAX(`person_id`) AS `person_id` FROM `mr_people`;", _connection);
+                using (MySqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        return reader["person_id"].ToString();
+                    }
+                }
+            }
+            catch (MySqlException exception)
+            {
+                MessageBox.Show(exception.ToString());
+            }
+            finally
+            {
+                _connection.Close();
+            }
 
+            return null;
+        }
 
 
 

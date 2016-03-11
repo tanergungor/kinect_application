@@ -19,6 +19,7 @@ using MySql.Data.MySqlClient;
 using System.Configuration;
 using KINECT_APPLICATION.DataStructures;
 using KINECT_APPLICATION.DB;
+using System.IO;
 
 namespace KINECT_APPLICATION
 {
@@ -32,12 +33,16 @@ namespace KINECT_APPLICATION
         // Create a doctor object
         private Doctor _doctor = null;
 
+        private String _filename = null;
+
         internal InsertPatientUserControl(Doctor doctor)
         {
             InitializeComponent();
 
             // Set the doctor object
             _doctor = doctor;
+
+            _filename = "C:/Users/Taner/Desktop/kinect_application/kinect_application/Resources/PHOTOS/PROFILE.png";
         }
 
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
@@ -46,6 +51,32 @@ namespace KINECT_APPLICATION
             Regex regex = new Regex("[^0-9]+");
             // Check if the text is matched with the regular expression created
             e.Handled = regex.IsMatch(e.Text);
+        }
+
+
+
+
+
+
+
+        private void LoadImage_Click(object sender, RoutedEventArgs e)
+        {
+            // Create Open File Dialog 
+            Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog();
+
+            // Set filter for file extension and default file extension
+            openFileDialog.Filter = "PNG Files (*.png)|*.png";
+
+            // Display OpenFileDialog by calling ShowDialog method 
+            Nullable<bool> result = openFileDialog.ShowDialog();
+
+            // Get the selected file name and display in a TextBox 
+            if (result == true)
+            {
+                _filename = openFileDialog.FileName;
+
+                Photo.Source = new BitmapImage(new Uri(openFileDialog.FileName));
+            }
         }
 
         // WARNING:: CHECK EMPTY FIELDS!
@@ -76,6 +107,15 @@ namespace KINECT_APPLICATION
             // If the patient's information is inserted
             if (isInserted)
             {
+                String patientId = _databaseConnection.SelectLastInsertedPatient();
+
+                using (var fileStream = new FileStream(System.IO.Path.Combine("C:/Users/Taner/Desktop/kinect_application/kinect_application/Resources/PHOTOS/", patientId + ".png"), FileMode.Create))
+                {
+                    BitmapEncoder encoder = new PngBitmapEncoder();
+                    encoder.Frames.Add(BitmapFrame.Create(new Uri(_filename)));
+                    encoder.Save(fileStream);
+                }
+
                 // If the patient's information is inserted, show the message
                 MessageBox.Show("INSERT: Successful - The patient's information is inserted!");
             }

@@ -311,7 +311,6 @@ namespace KINECT_APPLICATION
                     if (_isStart)
                     {
                         // Update the image with the data from the kinect camera
-                        oCamera.Source = ToBitmap(frame);
                         eCamera.Source = ToBitmap(frame);
                     }
                 }
@@ -392,6 +391,8 @@ namespace KINECT_APPLICATION
                 {
                     String exerciseId = taskContent.Items[taskContent.SelectedIndex].ToString().Substring(0, index);
 
+                    oCamera.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/EXERCISES/" + exerciseId + ".png"));
+
                     _filename = "DATA/PATIENT_" + _patient.Id + "/TASK_" + _task.Id;
 
                     if (!Directory.Exists(_filename))
@@ -422,11 +423,9 @@ namespace KINECT_APPLICATION
             }
         }
 
-        // WARNING::
+        // WARNING:: press start button, show the exercise video and say are you ready, then record the data
         private void Start_Click(object sender, RoutedEventArgs e)
         {
-            // press start button, show the exercise video and say are you ready, then record the data
-
             taskContent.IsEnabled = false;
 
             // Make disable the start button
@@ -474,7 +473,7 @@ namespace KINECT_APPLICATION
 
                 timer.Tick += (nSender, args) =>
                 {
-                    oCanvas.Children.RemoveRange(1, oCanvas.Children.Count);
+                    eCanvas.Children.RemoveRange(1, eCanvas.Children.Count);
 
                     if (frameNumber == bodyJointsListSize)
                     {
@@ -494,6 +493,10 @@ namespace KINECT_APPLICATION
                 };
 
                 timer.Start();
+            }
+            else
+            {
+                taskContent.IsEnabled = true;
             }
         }
 

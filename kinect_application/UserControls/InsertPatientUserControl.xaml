@@ -10,8 +10,8 @@
     <StackPanel Margin="50" Orientation="Horizontal">
 
         <StackPanel Margin="0,0,25,0" Orientation="Vertical">
-            <Image Margin="0,0,0,0" Source="pack://application:,,,/Resources/Profile.png" Height="96" Width="64" VerticalAlignment="Top" HorizontalAlignment="Center" />
-            <Button Background="White" Height="25">Load</Button>
+            <Image Name="Photo" Margin="0,0,0,0" Source="pack://application:,,,/Resources/PHOTOS/PROFILE.png" Height="96" Width="64" VerticalAlignment="Top" HorizontalAlignment="Center" />
+            <Button Click="LoadImage_Click" Background="White" Height="25">Load</Button>
         </StackPanel>
 
         <StackPanel Margin="0" Orientation="Vertical">
