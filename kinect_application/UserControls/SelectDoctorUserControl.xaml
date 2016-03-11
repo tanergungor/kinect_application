@@ -1,0 +1,152 @@
+﻿<UserControl x:Class="KINECT_APPLICATION.SelectDoctorUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:KINECT_APPLICATION"
+             mc:Ignorable="d" 
+             d:DesignHeight="768" d:DesignWidth="1200">
+
+    <StackPanel Margin="50" Orientation="Horizontal">
+
+
+        <StackPanel Orientation="Vertical">
+
+            <StackPanel Margin="0,0,0,25" Orientation="Horizontal">
+                <TextBlock Name="Welcome" FontSize="24" Foreground="#33CCFF">WELCOME</TextBlock>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal">
+
+                <StackPanel Margin="0,0,25,0" Orientation="Vertical">
+                    <Image Margin="0,0,0,0" Source="pack://application:,,,/Resources/Profile.png" Height="96" Width="64" VerticalAlignment="Top" HorizontalAlignment="Center" />
+                    <Button Background="White" Height="25">Load</Button>
+                </StackPanel>
+
+                <StackPanel Margin="0,0,25,0" Orientation="Vertical">
+
+                    <StackPanel Margin="0,0,0,10" Orientation="Horizontal">
+                        <Label Width="100">Name</Label>
+                        <TextBox VerticalContentAlignment="Center" Name="Name" Width="150" />
+                    </StackPanel>
+
+                    <StackPanel Margin="0,0,0,10" Orientation="Horizontal">
+                        <Label Width="100">Surname</Label>
+                        <TextBox VerticalContentAlignment="Center" Name="Surname" Width="150" />
+                    </StackPanel>
+
+                    <StackPanel Margin="0,0,0,10" Orientation="Horizontal">
+                        <Label Width="100">Phone</Label>
+                        <TextBox VerticalContentAlignment="Center" Name="Phone" Width="150" />
+                    </StackPanel>
+
+                    <StackPanel Margin="0,0,0,10" Orientation="Horizontal">
+                        <Label Width="100">E-mail</Label>
+                        <TextBox VerticalContentAlignment="Center" Name="Email" Width="150" />
+                    </StackPanel>
+                    
+                    <StackPanel Margin="0,0,0,10" Orientation="Horizontal">
+                        <Label Width="100">Birthdate</Label>
+                        <DatePicker Name="Birthdate" Width="150"></DatePicker>
+                    </StackPanel>
+
+                    <StackPanel Margin="0,0,0,10" Orientation="Horizontal">
+                        <Label Width="100">Gender</Label>
+                        <ComboBox Name="Gender" Width="150">
+                            <ComboBoxItem>Female</ComboBoxItem>
+                            <ComboBoxItem>Male</ComboBoxItem>
+                        </ComboBox>
+                    </StackPanel>
+
+                    <Button Background="White" Margin="0,0,0,10" Height="25" Click="UpdateDoctor_Click">Update</Button>
+
+                    <Button Background="White" Margin="0,0,0,10" Height="25" Click="Exit_Click">Exit</Button>
+
+                </StackPanel>
+                
+            </StackPanel>
+            
+    </StackPanel>
+
+        
+        
+    <StackPanel Orientation="Vertical">
+
+            <StackPanel Margin="0,0,0,10" Orientation="Horizontal" Height="275">
+
+                <TextBlock Text="PATIENT LIST" VerticalAlignment="Center">
+                    <TextBlock.LayoutTransform>
+                        <RotateTransform Angle="90" />
+                    </TextBlock.LayoutTransform>
+                </TextBlock>
+
+                <DataGrid Name="patientList" HorizontalGridLinesBrush="#33CCFF" VerticalGridLinesBrush="#33CCFF" AutoGenerateColumns="False" ItemsSource="{Binding Path=LoadDataBinding}" CanUserAddRows="False" Width="700">
+
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="ID" Binding="{Binding Path=person_id}" />
+                        <DataGridTextColumn Header="Name" Binding="{Binding Path=person_name}" />
+                        <DataGridTextColumn Header="Surname" Binding="{Binding Path=person_surname}" />
+                        <DataGridTextColumn Header="E-mail" Binding="{Binding Path=person_email}" />
+                        <DataGridTextColumn Header="Gender" Binding="{Binding Path=person_gender}" />
+                        <DataGridTextColumn Header="Date of Birth" Binding="{Binding Path=person_birthdate}" />
+                        <DataGridTextColumn Header="Registration Date" Binding="{Binding Path=person_registered_date}" />
+
+                        <DataGridTemplateColumn>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Background="White" Name="Select" Click="SelectPatient_Click" BorderThickness="0"><Image Source="pack://application:,,,/Resources/Select.png" /></Button>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Background="White" Name="Delete" Click="DeletePatient_Click" BorderThickness="0"><Image Source="pack://application:,,,/Resources/Delete.png" /></Button>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
+
+            <Button Background="White" Height="25" Click="InsertPatient_Click">Add New Patient</Button>
+
+            <StackPanel Margin="0,10,0,10" Orientation="Horizontal" Height="275">
+
+                <TextBlock Text="EXERCISE LIST" VerticalAlignment="Center">
+                    <TextBlock.LayoutTransform>
+                        <RotateTransform Angle="90" />
+                    </TextBlock.LayoutTransform>
+                </TextBlock>
+
+                <DataGrid Name="exerciseList" HorizontalGridLinesBrush="#33CCFF" VerticalGridLinesBrush="#33CCFF" AutoGenerateColumns="False" ItemsSource="{Binding Path=LoadDataBinding}" CanUserAddRows="False" Width="700">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="ID" Binding="{Binding Path=exercise_id}" />
+                        <DataGridTextColumn Header="Name" Binding="{Binding Path=exercise_name}" />
+                        <DataGridTextColumn Header="Path" Binding="{Binding Path=exercise_path}" />
+
+                        <DataGridTemplateColumn>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Background="White" Name="Select" Click="SelectExercise_Click" BorderThickness="0"><Image Source="pack://application:,,,/Resources/Select.png" /></Button>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Background="White" Name="Delete" Click="DeleteExercise_Click" BorderThickness="0"><Image Source="pack://application:,,,/Resources/Delete.png" /></Button>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
+
+            <Button IsEnabled="False" Height="25" Click="InsertExercise_Click">Add New Exercise</Button>
+
+        </StackPanel>
+
+    </StackPanel>
+
+</UserControl>

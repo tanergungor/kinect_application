@@ -1,0 +1,42 @@
+﻿<UserControl x:Class="KINECT_APPLICATION.UserControls.SelectTaskUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:KINECT_APPLICATION.UserControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="768" d:DesignWidth="1200">
+
+    <StackPanel  Margin="50" Orientation="Vertical">
+
+        <StackPanel Margin="0,0,0,10" Orientation="Horizontal">
+            <Label Width="100">Name</Label>
+            <TextBox VerticalContentAlignment="Center" Name="Name" Width="410" />
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal">
+            <Label Width="250" Margin="0,0,10,0">TASK LIST</Label>
+            <Label Width="250" Margin="0,0,10,0">EXERCISE LIST</Label>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal">
+            <ListBox Width="250" Height="300" Name="taskContent" Margin="0,0,10,10" />
+            <ListBox Width="250" Height="300" Name="exerciseList" Margin="0,0,10,10" />
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal">
+            <Button Click="RemoveExercise_Click" Name="Remove" Background="White" Height="25" Width="250" Margin="0,0,10,50">Remove Exercise (X)</Button>
+            <Button Click="AddExercise_Click" Name="Add" Background="White" Height="25" Width="250" Margin="0,0,10,50">Add Exercise (&lt;&lt;)</Button>
+        </StackPanel>
+
+        <StackPanel Margin="0,0,0,10" Orientation="Horizontal">
+            <Button Background="White" Click="UpdateTask_Click" Height="25" Width="250">Update</Button>
+        </StackPanel>
+
+        <StackPanel Margin="0,0,0,10" Orientation="Horizontal">
+            <Button Background="White" Click="Cancel_Click" Height="25" Width="250">Cancel</Button>
+        </StackPanel>
+
+    </StackPanel>
+
+</UserControl>
