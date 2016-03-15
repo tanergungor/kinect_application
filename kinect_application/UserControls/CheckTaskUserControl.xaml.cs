@@ -42,7 +42,6 @@ namespace KINECT_APPLICATION.UserControls
         private Double _fatigue = 0;
         private Double _mood = 0;
 
-
         internal CheckTaskUserControl(Person doctor, Person patient, Task task)
         {
             InitializeComponent();
@@ -240,7 +239,7 @@ namespace KINECT_APPLICATION.UserControls
 
                                 if (count == 0)
                                 {
-                                    bodyJoints = new BodyJoints(int.Parse(words[0]));
+                                    bodyJoints = new BodyJoints();
                                 }
 
                                 Joint joint = new Joint();

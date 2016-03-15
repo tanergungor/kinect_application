@@ -1,4 +1,4 @@
-﻿using System;
+﻿  using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+ 
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
@@ -32,7 +33,7 @@ namespace KINECT_APPLICATION
         private DatabaseConnection _databaseConnection = DatabaseConnection.getDatabaseConnection();
         // Create a doctor object
         private Person _doctor = null;
-
+        // Create a string object that keep the file path
         private String _filename = null;
 
         internal InsertPatientUserControl(Person doctor)
@@ -41,7 +42,7 @@ namespace KINECT_APPLICATION
 
             // Set the doctor object
             _doctor = doctor;
-
+            // Set the file path
             _filename = "C:/Users/Taner/Desktop/kinect_application/kinect_application/Resources/PHOTOS/PROFILE.png";
         }
 
@@ -53,28 +54,23 @@ namespace KINECT_APPLICATION
             e.Handled = regex.IsMatch(e.Text);
         }
 
-
-
-
-
-
-
         private void LoadImage_Click(object sender, RoutedEventArgs e)
         {
-            // Create Open File Dialog 
+            // Create open file dialog 
             Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog();
 
             // Set filter for file extension and default file extension
             openFileDialog.Filter = "PNG Files (*.png)|*.png";
 
-            // Display OpenFileDialog by calling ShowDialog method 
+            // Display open file dialog by calling show dialog method 
             Nullable<bool> result = openFileDialog.ShowDialog();
 
-            // Get the selected file name and display in a TextBox 
+            // Get the selected file name if it is not not
             if (result == true)
             {
+                // Get the path of the patient photo
                 _filename = openFileDialog.FileName;
-
+                // Set the patient photo
                 Photo.Source = new BitmapImage(new Uri(openFileDialog.FileName));
             }
         }

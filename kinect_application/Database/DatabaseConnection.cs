@@ -456,8 +456,31 @@ namespace KINECT_APPLICATION.DB
 
 
 
+        public Boolean UpdateExerciseRelation(String taskId, Exercise exercise)
+        {
+            try
+            {
+                _connection.Open();
+                MySqlCommand command = new MySqlCommand("UPDATE `mr_relations` SET `relation_exercise_status` = '1', `relation_exercise_pain` = @relation_exercise_pain, `relation_exercise_fatigue` = @relation_exercise_fatigue, `relation_exercise_mood` = @relation_exercise_mood WHERE `relation_task_id` = @relation_task_id AND `relation_exercise_id` = @relation_exercise_id;", _connection);
+                command.Parameters.AddWithValue("relation_task_id", taskId);
+                command.Parameters.AddWithValue("relation_exercise_id", exercise.Id);
+                command.Parameters.AddWithValue("relation_exercise_pain", exercise.Pain);
+                command.Parameters.AddWithValue("relation_exercise_fatigue", exercise.Fatigue);
+                command.Parameters.AddWithValue("relation_exercise_mood", exercise.Mood);
+                command.ExecuteNonQuery();
+                return true;
+            }
+            catch (MySqlException exception)
+            {
+                MessageBox.Show(exception.ToString());
+            }
+            finally
+            {
+                _connection.Close();
+            }
 
-
+            return false;
+        }
 
 
 
@@ -577,7 +600,7 @@ namespace KINECT_APPLICATION.DB
             try
             {
                 _connection.Open();
-                MySqlCommand command = new MySqlCommand("SELECT `exercise_id`, `exercise_name`, `relation_exercise_pain`, `relation_exercise_fatigue`, `relation_exercise_mood` FROM `mr_tasks`, `mr_relations`, `mr_exercises` WHERE `task_id` = `relation_task_id` AND `exercise_id` = `relation_exercise_id` AND `task_id` = @task_id AND `task_person_id` = @person_id;", _connection);
+                MySqlCommand command = new MySqlCommand("SELECT `exercise_id`, `exercise_name`, `relation_exercise_pain`, `relation_exercise_fatigue`, `relation_exercise_mood`, `relation_exercise_status` FROM `mr_tasks`, `mr_relations`, `mr_exercises` WHERE `task_id` = `relation_task_id` AND `exercise_id` = `relation_exercise_id` AND `task_id` = @task_id AND `task_person_id` = @person_id;", _connection);
                 command.Parameters.AddWithValue("task_id", taskID);
                 command.Parameters.AddWithValue("person_id", patientID);
 
@@ -588,9 +611,10 @@ namespace KINECT_APPLICATION.DB
                         Exercise exercise = new Exercise();
                         exercise.Id = reader["exercise_id"].ToString();
                         exercise.Name = reader["exercise_name"].ToString();
-                        exercise.Pain = (Double) reader["relation_exercise_pain"];
-                        exercise.Fatigue = (Double)reader["relation_exercise_fatigue"];
-                        exercise.Mood = (Double)reader["relation_exercise_mood"];
+                        exercise.Pain = (double)reader["relation_exercise_pain"];
+                        exercise.Fatigue = (double)reader["relation_exercise_fatigue"];
+                        exercise.Mood = (double)reader["relation_exercise_mood"];
+                        exercise.Status = (int)reader["relation_exercise_status"];
 
                         // Add the exercise ID nad name
                         list.Add(exercise);

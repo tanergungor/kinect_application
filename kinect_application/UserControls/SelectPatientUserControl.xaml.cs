@@ -35,9 +35,11 @@ namespace KINECT_APPLICATION
         private Person _doctor = null;
         // Create a patient object
         private Person _patient = null;
-
+        // Create a pain value for progress bar
         private Double _pain = 0;
+        // Create a fatigue value for progress bar
         private Double _fatigue = 0;
+        // Create a mood value for progress bar
         private Double _mood = 0;
 
         internal SelectPatientUserControl(Person doctor, Person patient)
@@ -215,34 +217,23 @@ namespace KINECT_APPLICATION
             window.Show();
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
         private void LoadImage_Click(object sender, RoutedEventArgs e)
         {
-            // Create Open File Dialog 
+            // Create open file dialog 
             Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog();
 
             // Set filter for file extension and default file extension
             openFileDialog.Filter = "PNG Files (*.png)|*.png";
 
-            // Display OpenFileDialog by calling ShowDialog method 
+            // Display open file dialog by calling show dialog method 
             Nullable<bool> result = openFileDialog.ShowDialog();
 
-            // Get the selected file name and display in a TextBox 
+            // Get the selected file name if it is not not
             if (result == true)
             {
+                // Get the path of the patient photo
                 _patient.Photo = openFileDialog.FileName;
-
+                // Set the patient photo
                 Photo.Source = new BitmapImage(new Uri(openFileDialog.FileName));
             }
         }

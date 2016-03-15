@@ -10,21 +10,13 @@ namespace KINECT_APPLICATION.DataStructures
     public class BodyJoints
     {
         private Dictionary<String, Joint> _BodyJointsDictionary = new Dictionary<String, Joint>();
-        private int _index = 0;
 
         internal BodyJoints()
         {
         }
 
-        internal BodyJoints(int _index)
+        internal BodyJoints(Body body)
         {
-            this._index = _index;
-        }
-
-        internal BodyJoints(int _index, Body body)
-        {
-            this._index = _index;
-
             // Head
             _BodyJointsDictionary.Add(JointType.Head.ToString(), body.Joints[JointType.Head]);
             // Neck
@@ -75,19 +67,6 @@ namespace KINECT_APPLICATION.DataStructures
             _BodyJointsDictionary.Add(JointType.WristRight.ToString(), body.Joints[JointType.WristRight]);
             // Wrist Left
             _BodyJointsDictionary.Add(JointType.WristLeft.ToString(), body.Joints[JointType.WristLeft]);
-        }
-
-        public int Index
-        {
-            get
-            {
-                return _index;
-            }
-
-            set
-            {
-                _index = value;
-            }
         }
 
         internal Dictionary<String, Joint> BodyJointsDictionary

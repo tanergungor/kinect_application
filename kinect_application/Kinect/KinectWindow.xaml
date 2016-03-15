@@ -27,41 +27,33 @@
 
             <StackPanel Orientation="Vertical" Margin="0,0,10,0">
                 <Button Click="Start_Click" Name="Start" IsEnabled="False" Background="White" Height="25" Width="250" Margin="0,0,0,10">Start</Button>
-                <Button Click="Stop_Click" Name="Stop" IsEnabled="False" Background="White" Height="25" Width="250" Margin="0,0,0,10">Stop</Button>
                 <Button Click="Replay_Click" Name="Replay" IsEnabled="False" Background="White" Height="25" Width="250" Margin="0,0,0,10">Replay</Button>
+                <Button Click="Finish_Click" Name="Finish" IsEnabled="False" Background="White" Height="25" Width="250" Margin="0,0,0,10">Finish</Button>
                 <Button Click="Exit_Click" Background="White" Height="25" Width="250">Exit</Button>
             </StackPanel>
 
             <StackPanel Orientation="Vertical">
-                
-                <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                    <Label Width="150" Content="Kinect Status" />
-                    <Label Name="Status" Width="212" Content="Not Connected" Foreground="Red" />
+
+                <StackPanel Orientation="Horizontal" Height="25" Margin="0,0,0,10">
+                    <Label Name="Status" Width="150" Content="Not Connected" Foreground="Red" />
                     <Button Name="Connect" Width="150" Click="Connect_Click">Connect</Button>
                 </StackPanel>
-                
-                <!--
-                <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                    <Label Width="150">SPINE BASE</Label>
-                    <Label Width="100">X:</Label>
-                    <Label Width="100" Name="SpineBaseX"></Label>
-                    <Label Width="100">Y:</Label>
-                    <Label Width="100" Name="SpineBaseY"></Label>
+
+                <StackPanel Orientation="Horizontal" Height="25" Margin="0,0,0,10">
+                    <Label Width="150">Pain</Label>
+                    <TextBox IsEnabled="False" Width="150" Name="Pain" Height="25" PreviewTextInput="NumberValidationTextBox">0</TextBox>
+                </StackPanel> 
+
+                <StackPanel Orientation="Horizontal" Height="25" Margin="0,0,0,10">
+                    <Label Width="150">Fatigue</Label>
+                    <TextBox IsEnabled="False" Width="150" Name="Fatigue" PreviewTextInput="NumberValidationTextBox">0</TextBox>
                 </StackPanel>
-                
-                <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                    <Label Width="150">SPINE SHOULDER</Label>
-                    <Label Width="100">X:</Label>
-                    <Label Width="100" Name="SpineShoulderX"></Label>
-                    <Label Width="100">Y:</Label>
-                    <Label Width="100" Name="SpineShoulderY"></Label>
+
+                <StackPanel Orientation="Horizontal" Height="25">
+                    <Label Width="150">Mood</Label>
+                    <TextBox IsEnabled="False" Width="150" Name="Mood" PreviewTextInput="NumberValidationTextBox">0</TextBox>
                 </StackPanel>
-                
-                <StackPanel Orientation="Horizontal">
-                    <Label Width="150">ANGLE</Label>
-                    <Label Width="100" Name="Angle"></Label>
-                </StackPanel>
--->
+
             </StackPanel>
             
         </StackPanel>

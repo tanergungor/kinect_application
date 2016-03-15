@@ -11,9 +11,10 @@ namespace KINECT_APPLICATION.DataStructures
         private String _id;
         private String _name;
         private String _path;
-        private Double _pain;
-        private Double _fatigue;
-        private Double _mood;
+        private double _pain;
+        private double _fatigue;
+        private double _mood;
+        private int _status;
 
         public Exercise()
         {
@@ -94,6 +95,20 @@ namespace KINECT_APPLICATION.DataStructures
             set
             {
                 _mood = value;
+            }
+        }
+
+
+        public int Status
+        {
+            get
+            {
+                return _status;
+            }
+
+            set
+            {
+                _status = value;
             }
         }
     }

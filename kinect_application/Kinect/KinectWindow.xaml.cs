@@ -15,6 +15,7 @@ using KINECT_APPLICATION.DataStructures;
 using KINECT_APPLICATION.DB;
 using System.IO;
 using System.Windows.Threading;
+using System.Text.RegularExpressions;
 
 namespace KINECT_APPLICATION
 {
@@ -33,8 +34,9 @@ namespace KINECT_APPLICATION
         private Task _task = null;
 
 
-        private Boolean _isStart = false;
+        private Boolean _isStart = false, _isStop = false;
         private int _frameNumber = 1;
+        private BodyJoints _bodyJoints = null;
         private String _filename = null;
         private KinectSensor _kinectSensor;
         private List<BodyJoints> _bodyJointsList;
@@ -59,9 +61,25 @@ namespace KINECT_APPLICATION
             // Traverse each exercise in the current task
             for (int i = 0; i < _task.ExerciseList.Count; i++)
             {
-                // Add the current exercise to the task list box
-                taskContent.Items.Add(_task.ExerciseList[i].Id + "-" + _task.ExerciseList[i].Name);
+                if (_task.ExerciseList[i].Status == 1)
+                {
+                    // Add the current exercise to the task list box
+                    taskContent.Items.Add(_task.ExerciseList[i].Id + "-" + _task.ExerciseList[i].Name + "_DONE");
+                }
+                else
+                {
+                    // Add the current exercise to the task list box
+                    taskContent.Items.Add(_task.ExerciseList[i].Id + "-" + _task.ExerciseList[i].Name);
+                }
             }
+        }
+
+        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
+        {
+            // Create a regular expression that only accepts the number
+            Regex regex = new Regex("[^0-9]+");
+            // Check if the text is matched with the regular expression created
+            e.Handled = regex.IsMatch(e.Text);
         }
 
         private void Connect_Click(object sender, RoutedEventArgs e)
@@ -82,8 +100,6 @@ namespace KINECT_APPLICATION
                 taskContent.IsEnabled = false;
                 // Make disable the start button
                 Start.IsEnabled = false;
-                // Make disable the stop button
-                Stop.IsEnabled = false;
                 // Make disable the replay button
                 Replay.IsEnabled = false;
             }
@@ -147,14 +163,14 @@ namespace KINECT_APPLICATION
 
 
 
-        public void DrawLine(Canvas canvas, Joint newF, Joint newS)
+        public void DrawLine(Canvas canvas, Joint newF, Joint newS, SolidColorBrush colorBrush)
         {
             if (newF.Position.X < canvas.Width && 
                 newF.Position.Y < canvas.Height && 
                 newF.Position.X > 0 && 
                 newF.Position.Y > 0)
             {
-                Ellipse ellipse = new Ellipse { Fill = Brushes.Red, Width = 10, Height = 10 };
+                Ellipse ellipse = new Ellipse { Fill = colorBrush, Width = 10, Height = 10 };
                 Canvas.SetLeft(ellipse, newF.Position.X - ellipse.Width / 2);
                 Canvas.SetTop(ellipse, newF.Position.Y - ellipse.Height / 2);
                 canvas.Children.Add(ellipse);
@@ -165,7 +181,7 @@ namespace KINECT_APPLICATION
                 newS.Position.X > 0 && 
                 newS.Position.Y > 0)
             {
-                Ellipse ellipse = new Ellipse { Fill = Brushes.Red, Width = 10, Height = 10 };
+                Ellipse ellipse = new Ellipse { Fill = colorBrush, Width = 10, Height = 10 };
                 Canvas.SetLeft(ellipse, newS.Position.X - ellipse.Width / 2);
                 Canvas.SetTop(ellipse, newS.Position.Y - ellipse.Height / 2);
                 canvas.Children.Add(ellipse);
@@ -180,7 +196,7 @@ namespace KINECT_APPLICATION
                 newS.Position.X > 0 && 
                 newS.Position.Y > 0)
             {
-                Line line = new Line { X1 = newF.Position.X, Y1 = newF.Position.Y, X2 = newS.Position.X, Y2 = newS.Position.Y, StrokeThickness = 5, Stroke = new SolidColorBrush(Colors.Red) };
+                Line line = new Line { X1 = newF.Position.X, Y1 = newF.Position.Y, X2 = newS.Position.X, Y2 = newS.Position.Y, StrokeThickness = 5, Stroke = colorBrush };
                 canvas.Children.Add(line);
             }
         }
@@ -189,43 +205,87 @@ namespace KINECT_APPLICATION
         {
             if (body != null)
             {
-                DrawLine(canvas, body.BodyJointsDictionary[JointType.Head.ToString()], body.BodyJointsDictionary[JointType.Neck.ToString()]);
-                DrawLine(canvas, body.BodyJointsDictionary[JointType.Neck.ToString()], body.BodyJointsDictionary[JointType.SpineShoulder.ToString()]);
-                DrawLine(canvas, body.BodyJointsDictionary[JointType.SpineShoulder.ToString()], body.BodyJointsDictionary[JointType.ShoulderLeft.ToString()]);
-                DrawLine(canvas, body.BodyJointsDictionary[JointType.SpineShoulder.ToString()], body.BodyJointsDictionary[JointType.ShoulderRight.ToString()]);
-                DrawLine(canvas, body.BodyJointsDictionary[JointType.SpineShoulder.ToString()], body.BodyJointsDictionary[JointType.SpineMid.ToString()]);
-                DrawLine(canvas, body.BodyJointsDictionary[JointType.ShoulderLeft.ToString()], body.BodyJointsDictionary[JointType.ElbowLeft.ToString()]);
-                DrawLine(canvas, body.BodyJointsDictionary[JointType.ShoulderRight.ToString()], body.BodyJointsDictionary[JointType.ElbowRight.ToString()]);
-                DrawLine(canvas, body.BodyJointsDictionary[JointType.ElbowLeft.ToString()], body.BodyJointsDictionary[JointType.WristLeft.ToString()]);
-                DrawLine(canvas, body.BodyJointsDictionary[JointType.ElbowRight.ToString()], body.BodyJointsDictionary[JointType.WristRight.ToString()]);
-                // DrawLine(canvas, body.BodyJointsDictionary[JointType.WristLeft], body.BodyJointsDictionary[JointType.HandLeft]);
-                // DrawLine(canvas, body.BodyJointsDictionary[JointType.WristRight], body.BodyJointsDictionary[JointType.HandRight]);
-                // DrawLine(canvas, body.BodyJointsDictionary[JointType.HandLeft], body.BodyJointsDictionary[JointType.HandTipLeft]);
-                // DrawLine(canvas, body.BodyJointsDictionary[JointType.HandRight], body.BodyJointsDictionary[JointType.HandTipRight]);
-                // DrawLine(canvas, body.BodyJointsDictionary[JointType.HandTipLeft], body.BodyJointsDictionary[JointType.ThumbLeft]);
-                // DrawLine(canvas, body.BodyJointsDictionary[JointType.HandTipRight], body.BodyJointsDictionary[JointType.ThumbRight]);
-                DrawLine(canvas, body.BodyJointsDictionary[JointType.SpineMid.ToString()], body.BodyJointsDictionary[JointType.SpineBase.ToString()]);
-                DrawLine(canvas, body.BodyJointsDictionary[JointType.SpineBase.ToString()], body.BodyJointsDictionary[JointType.HipLeft.ToString()]);
-                DrawLine(canvas, body.BodyJointsDictionary[JointType.SpineBase.ToString()], body.BodyJointsDictionary[JointType.HipRight.ToString()]);
-                DrawLine(canvas, body.BodyJointsDictionary[JointType.HipLeft.ToString()], body.BodyJointsDictionary[JointType.KneeLeft.ToString()]);
-                DrawLine(canvas, body.BodyJointsDictionary[JointType.HipRight.ToString()], body.BodyJointsDictionary[JointType.KneeRight.ToString()]);
-                DrawLine(canvas, body.BodyJointsDictionary[JointType.KneeLeft.ToString()], body.BodyJointsDictionary[JointType.AnkleLeft.ToString()]);
-                DrawLine(canvas, body.BodyJointsDictionary[JointType.KneeRight.ToString()], body.BodyJointsDictionary[JointType.AnkleRight.ToString()]);
-                // DrawLine(canvas, body.BodyJointsDictionary[JointType.AnkleLeft], body.BodyJointsDictionary[JointType.FootLeft]);
-                // DrawLine(canvas, body.BodyJointsDictionary[JointType.AnkleRight], body.BodyJointsDictionary[JointType.FootRight]);
+                if (body.BodyJointsDictionary.ContainsKey(JointType.Head.ToString()) && body.BodyJointsDictionary.ContainsKey(JointType.Neck.ToString()))
+                {
+                    DrawLine(canvas, body.BodyJointsDictionary[JointType.Head.ToString()], body.BodyJointsDictionary[JointType.Neck.ToString()], Brushes.Red);
+                }
 
-                /*
-                SpineBaseX.Content = body.BodyJointsDictionary[JointType.SpineBase.ToString()].Position.X.ToString();
-                SpineBaseY.Content = body.BodyJointsDictionary[JointType.SpineBase.ToString()].Position.Y.ToString();
+                if (body.BodyJointsDictionary.ContainsKey(JointType.Neck.ToString()) && body.BodyJointsDictionary.ContainsKey(JointType.SpineShoulder.ToString()))
+                {
+                    DrawLine(canvas, body.BodyJointsDictionary[JointType.Neck.ToString()], body.BodyJointsDictionary[JointType.SpineShoulder.ToString()], Brushes.Red);
+                }
 
-                SpineShoulderX.Content = body.BodyJointsDictionary[JointType.SpineShoulder.ToString()].Position.X.ToString();
-                SpineShoulderY.Content = body.BodyJointsDictionary[JointType.SpineShoulder.ToString()].Position.Y.ToString();
+                if (body.BodyJointsDictionary.ContainsKey(JointType.SpineShoulder.ToString()) && body.BodyJointsDictionary.ContainsKey(JointType.ShoulderLeft.ToString()))
+                {
+                    DrawLine(canvas, body.BodyJointsDictionary[JointType.SpineShoulder.ToString()], body.BodyJointsDictionary[JointType.ShoulderLeft.ToString()], Brushes.Red);
+                }
 
-                Angle.Content = (body.BodyJointsDictionary[JointType.SpineShoulder.ToString()].Position.Y - body.BodyJointsDictionary[JointType.SpineBase.ToString()].Position.Y) / (body.BodyJointsDictionary[JointType.SpineShoulder.ToString()].Position.X - body.BodyJointsDictionary[JointType.SpineBase.ToString()].Position.X);
-                */
+                if (body.BodyJointsDictionary.ContainsKey(JointType.SpineShoulder.ToString()) && body.BodyJointsDictionary.ContainsKey(JointType.ShoulderRight.ToString()))
+                {
+                    DrawLine(canvas, body.BodyJointsDictionary[JointType.SpineShoulder.ToString()], body.BodyJointsDictionary[JointType.ShoulderRight.ToString()], Brushes.Red);
+                }
+
+                if (body.BodyJointsDictionary.ContainsKey(JointType.SpineShoulder.ToString()) && body.BodyJointsDictionary.ContainsKey(JointType.SpineMid.ToString()))
+                {
+                    DrawLine(canvas, body.BodyJointsDictionary[JointType.SpineShoulder.ToString()], body.BodyJointsDictionary[JointType.SpineMid.ToString()], Brushes.Green);
+                }
+
+                if (body.BodyJointsDictionary.ContainsKey(JointType.ShoulderLeft.ToString()) && body.BodyJointsDictionary.ContainsKey(JointType.ElbowLeft.ToString()))
+                {
+                    DrawLine(canvas, body.BodyJointsDictionary[JointType.ShoulderLeft.ToString()], body.BodyJointsDictionary[JointType.ElbowLeft.ToString()], Brushes.Red);
+                }
+
+                if (body.BodyJointsDictionary.ContainsKey(JointType.ShoulderRight.ToString()) && body.BodyJointsDictionary.ContainsKey(JointType.ElbowRight.ToString()))
+                {
+                    DrawLine(canvas, body.BodyJointsDictionary[JointType.ShoulderRight.ToString()], body.BodyJointsDictionary[JointType.ElbowRight.ToString()], Brushes.Red);
+                }
+
+                if (body.BodyJointsDictionary.ContainsKey(JointType.ElbowLeft.ToString()) && body.BodyJointsDictionary.ContainsKey(JointType.WristLeft.ToString()))
+                {
+                    DrawLine(canvas, body.BodyJointsDictionary[JointType.ElbowLeft.ToString()], body.BodyJointsDictionary[JointType.WristLeft.ToString()], Brushes.Red);
+                }
+
+                if (body.BodyJointsDictionary.ContainsKey(JointType.ElbowRight.ToString()) && body.BodyJointsDictionary.ContainsKey(JointType.WristRight.ToString()))
+                {
+                    DrawLine(canvas, body.BodyJointsDictionary[JointType.ElbowRight.ToString()], body.BodyJointsDictionary[JointType.WristRight.ToString()], Brushes.Red);
+                }
+
+                if (body.BodyJointsDictionary.ContainsKey(JointType.SpineMid.ToString()) && body.BodyJointsDictionary.ContainsKey(JointType.SpineBase.ToString()))
+                {
+                    DrawLine(canvas, body.BodyJointsDictionary[JointType.SpineMid.ToString()], body.BodyJointsDictionary[JointType.SpineBase.ToString()], Brushes.Green);
+                }
+
+                if (body.BodyJointsDictionary.ContainsKey(JointType.SpineBase.ToString()) && body.BodyJointsDictionary.ContainsKey(JointType.HipLeft.ToString()))
+                {
+                    DrawLine(canvas, body.BodyJointsDictionary[JointType.SpineBase.ToString()], body.BodyJointsDictionary[JointType.HipLeft.ToString()], Brushes.Red);
+                }
+
+                if (body.BodyJointsDictionary.ContainsKey(JointType.SpineBase.ToString()) && body.BodyJointsDictionary.ContainsKey(JointType.HipRight.ToString()))
+                {
+                    DrawLine(canvas, body.BodyJointsDictionary[JointType.SpineBase.ToString()], body.BodyJointsDictionary[JointType.HipRight.ToString()], Brushes.Red);
+                }
+
+                if (body.BodyJointsDictionary.ContainsKey(JointType.HipLeft.ToString()) && body.BodyJointsDictionary.ContainsKey(JointType.KneeLeft.ToString()))
+                {
+                    DrawLine(canvas, body.BodyJointsDictionary[JointType.HipLeft.ToString()], body.BodyJointsDictionary[JointType.KneeLeft.ToString()], Brushes.Red);
+                }
+
+                if (body.BodyJointsDictionary.ContainsKey(JointType.HipRight.ToString()) && body.BodyJointsDictionary.ContainsKey(JointType.KneeRight.ToString()))
+                {
+                    DrawLine(canvas, body.BodyJointsDictionary[JointType.HipRight.ToString()], body.BodyJointsDictionary[JointType.KneeRight.ToString()], Brushes.Red);
+                }
+
+                if (body.BodyJointsDictionary.ContainsKey(JointType.KneeLeft.ToString()) && body.BodyJointsDictionary.ContainsKey(JointType.AnkleLeft.ToString()))
+                {
+                    DrawLine(canvas, body.BodyJointsDictionary[JointType.KneeLeft.ToString()], body.BodyJointsDictionary[JointType.AnkleLeft.ToString()], Brushes.Red);
+                }
+
+                if (body.BodyJointsDictionary.ContainsKey(JointType.KneeRight.ToString()) && body.BodyJointsDictionary.ContainsKey(JointType.AnkleRight.ToString()))
+                {
+                    DrawLine(canvas, body.BodyJointsDictionary[JointType.KneeRight.ToString()], body.BodyJointsDictionary[JointType.AnkleRight.ToString()], Brushes.Red);
+                }
             }
         }
-
 
 
 
@@ -242,58 +302,47 @@ namespace KINECT_APPLICATION
                 // Check if the frame is empty or not
                 if (frame != null)
                 {
-                    // Check if the mode is body or not
-                    if (_isStart)
+                    IList<Body> _bodyList = new Body[frame.BodyFrameSource.BodyCount];
+
+                    // Gets refreshed body data
+                    frame.GetAndRefreshBodyData(_bodyList);
+
+                    // For each body data traverse the joints
+                    for (int i = 0; i < _bodyList.Count; i++)
                     {
-                        IList<Body> _bodyList = new Body[frame.BodyFrameSource.BodyCount];
-
-                        // Gets refreshed body data
-                        frame.GetAndRefreshBodyData(_bodyList);
-
-                        // For each body data traverse the joints
-                        for(int i = 0; i < _bodyList.Count; i++)
+                        // Check the current body data is empty or not
+                        // Check whether or not the body is tracked
+                        if (_bodyList[i] != null && _bodyList[i].IsTracked)
                         {
-                            // Check the current body data is empty or not
-                            if (_bodyList[i] != null)
+                            _bodyJoints = new BodyJoints();
+
+                            foreach (var bodyJoints in _bodyList[i].Joints)
                             {
-                                // Check whether or not the body is tracked
-                                if (_bodyList[i].IsTracked)
+                                if (bodyJoints.Value.TrackingState != TrackingState.NotTracked)
                                 {
-                                    if (File.Exists(_filename))
+                                    Joint newJ = new Joint();
+
+                                    ColorSpacePoint colorPoint = _kinectSensor.CoordinateMapper.MapCameraPointToColorSpace(bodyJoints.Value.Position);
+                                    // WARNING be careful about resolution ratio
+                                    newJ.Position.X = float.IsInfinity(colorPoint.X) ? 0 : (colorPoint.X / (float)(1920 / eCanvas.Width));
+                                    // WARNING be careful about resolution ratio
+                                    newJ.Position.Y = float.IsInfinity(colorPoint.Y) ? 0 : (colorPoint.Y / (float)(1080 / eCanvas.Height));
+
+                                    _bodyJoints.BodyJointsDictionary.Add(bodyJoints.Key.ToString(), newJ);
+                                }
+                            }
+
+                            if (_isStart && File.Exists(_filename))
+                            {
+                                using (StreamWriter streamWriter = File.AppendText(_filename))
+                                {
+                                    foreach (var joint in _bodyJoints.BodyJointsDictionary)
                                     {
-                                        using (StreamWriter streamWriter = File.AppendText(_filename))
-                                        {
-                                            BodyJoints bodyJoints = new BodyJoints(_frameNumber);
-
-                                            foreach (var bodyJoint in _bodyList[i].Joints)
-                                            {
-                                                if (bodyJoint.Value.TrackingState != TrackingState.NotTracked)
-                                                {
-                                                    Joint newJ = new Joint();
-
-                                                    ColorSpacePoint colorPoint = _kinectSensor.CoordinateMapper.MapCameraPointToColorSpace(bodyJoint.Value.Position);
-                                                    // WARNING be careful about resolution ratio
-                                                    newJ.Position.X = float.IsInfinity(colorPoint.X) ? 0 : (colorPoint.X / (float)(1920 / eCanvas.Width));
-                                                    // WARNING be careful about resolution ratio
-                                                    newJ.Position.Y = float.IsInfinity(colorPoint.Y) ? 0 : (colorPoint.Y / (float)(1080 / eCanvas.Height));
-
-                                                    bodyJoints.BodyJointsDictionary.Add(bodyJoint.Key.ToString(), newJ);
-
-                                                    // KEEP ORIGINAL OR CONVERTED DATA
-                                                    streamWriter.WriteLine(_frameNumber + " " + bodyJoint.Key + " " + newJ.Position.X + " " + newJ.Position.Y);
-                                                }
-                                            }
-
-                                            eCanvas.Children.RemoveRange(1, eCanvas.Children.Count);
-                                            // Add the current body to the body list
-                                            // _bodyJointsList.Add(new BodyJoints(frameNumber, _bodyList[i]));
-                                            _bodyJointsList.Add(bodyJoints);
-                                            // Draw the whole body
-                                            Draw(eCanvas, _bodyJointsList[_frameNumber - 1]);
-
-                                            _frameNumber++;
-                                        }
+                                        // KEEP ORIGINAL OR CONVERTED DATA
+                                        streamWriter.WriteLine(_frameNumber + " " + joint.Key + " " + joint.Value.Position.X + " " + joint.Value.Position.Y);
                                     }
+
+                                    _frameNumber++;
                                 }
                             }
                         }
@@ -301,42 +350,25 @@ namespace KINECT_APPLICATION
                 }
             }
 
+
             // Open color frame
             using (var frame = reference.ColorFrameReference.AcquireFrame())
             {
                 // Check if the frame is empty or not
                 if (frame != null)
                 {
-                    // Check if the mode is color or not
-                    if (_isStart)
+                    if(!_isStop)
                     {
+                        // Clear the screen from previous body joints
+                        eCanvas.Children.RemoveRange(1, eCanvas.Children.Count);
+                        // Draw the whole body
+                        Draw(eCanvas, _bodyJoints);
                         // Update the image with the data from the kinect camera
                         eCamera.Source = ToBitmap(frame);
                     }
                 }
             }
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         private ImageSource ToBitmap(ColorFrame frame)
         {
@@ -374,12 +406,32 @@ namespace KINECT_APPLICATION
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         // WARNING:: Check if the exercise is done or not
+        // take id, read file of the exerciseX
         private void SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             // Check if the item is selected in the exercise list box
             if (taskContent.SelectedValue != null)
             {
+                _isStop = false;
+
                 // Set the frame number to 1
                 _frameNumber = 1;
 
@@ -391,76 +443,172 @@ namespace KINECT_APPLICATION
                 {
                     String exerciseId = taskContent.Items[taskContent.SelectedIndex].ToString().Substring(0, index);
 
+                    // WARNING:: maybe you can carry it outside of if
                     oCamera.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/EXERCISES/" + exerciseId + ".png"));
 
-                    _filename = "DATA/PATIENT_" + _patient.Id + "/TASK_" + _task.Id;
-
-                    if (!Directory.Exists(_filename))
+                    if (_task.ExerciseList[taskContent.SelectedIndex].Status == 0)
                     {
-                        Directory.CreateDirectory(_filename);
-                    }
+                        _filename = "DATA/PATIENT_" + _patient.Id + "/TASK_" + _task.Id;
 
-                    _filename = _filename + "/EXERCISE_" + exerciseId;
-
-                    if (!File.Exists(_filename))
-                    {
-                        // Create a file to write to.
-                        using (StreamWriter streamWriter = File.CreateText(_filename))
+                        if (!Directory.Exists(_filename))
                         {
-                            MessageBox.Show("File is created: " + _filename);
+                            Directory.CreateDirectory(_filename);
                         }
+
+                        _filename = _filename + "/EXERCISE_" + exerciseId;
+
+                        if (!File.Exists(_filename))
+                        {
+                            // Create a file to write to.
+                            using (StreamWriter streamWriter = File.CreateText(_filename))
+                            {
+                                MessageBox.Show("File is created: " + _filename);
+                            }
+                        }
+
+                        Start.IsEnabled = true;
+
+                        Replay.IsEnabled = false;
+
+                        Pain.IsEnabled = true;
+                        Pain.Text = "0";
+                        Fatigue.IsEnabled = true;
+                        Fatigue.Text = "0";
+                        Mood.IsEnabled = true;
+                        Mood.Text = "0";
                     }
-                }
+                    else
+                    {
+                        eCanvas.Children.RemoveRange(1, eCanvas.Children.Count);
 
+                        Start.Content = "Start";
 
+                        Start.IsEnabled = false;
 
-                // take id, read file of the exerciseX
-                
+                        Replay.IsEnabled = true;
 
+                        Pain.IsEnabled = false;
+                        Pain.Text = _task.ExerciseList[taskContent.SelectedIndex].Pain.ToString();
+                        Fatigue.IsEnabled = false;
+                        Fatigue.Text = _task.ExerciseList[taskContent.SelectedIndex].Fatigue.ToString();
+                        Mood.IsEnabled = false;
+                        Mood.Text = _task.ExerciseList[taskContent.SelectedIndex].Mood.ToString().ToString();
 
-                // Make enable the start button
-                Start.IsEnabled = true;
+                        // Update the image with the data from the kinect camera
+                        eCamera.Source = null;
+
+                        _isStart = false;
+                        _isStop = true;
+                    }
+                } 
             }
         }
 
         // WARNING:: press start button, show the exercise video and say are you ready, then record the data
         private void Start_Click(object sender, RoutedEventArgs e)
         {
-            taskContent.IsEnabled = false;
+            if(Start.Content.Equals("Start"))
+            {
+                taskContent.IsEnabled = false;
 
-            // Make disable the start button
-            Start.IsEnabled = false;
-            // Make enable the stop button
-            Stop.IsEnabled = true;
+                Start.Content = "Stop";
 
-            _isStart = true;
+                _isStart = true;
+            }
+            else
+            {
+                Start.Content = "Start";
+
+                Start.IsEnabled = false;
+
+                Replay.IsEnabled = true;
+
+                Finish.IsEnabled = true;
+
+                eCanvas.Children.RemoveRange(1, eCanvas.Children.Count);
+
+                // Update the image with the data from the kinect camera
+                eCamera.Source = null;
+
+                _isStart = false;
+                _isStop = true;
+            }
         }
 
-        // WARNING::
-        private void Stop_Click(object sender, RoutedEventArgs e)
-        {
-            // 
-            eCanvas.Children.RemoveRange(1, eCanvas.Children.Count);
 
-            // Make disable the stop button
-            Stop.IsEnabled = false;
-            // Make enable the replay button
-            Replay.IsEnabled = true;
 
-            // Update the image with the data from the kinect camera
-            oCamera.Source = null;
-            eCamera.Source = null;
 
-            _isStart = false;
-        }
 
-        // WARNING::
+
+
+
+
+
+
+
+
+
+
+
+
+        // WARNING:: READFILE NOT THE DATA STRUCTURE
         private void Replay_Click(object sender, RoutedEventArgs e)
         {
+            taskContent.IsEnabled = false;
+
             // Make disable the replay button
             Replay.IsEnabled = false;
+            Finish.IsEnabled = false;
 
             int frameNumber = 1;
+
+            // Find the index of the '-' character in the string
+            int index = taskContent.SelectedValue.ToString().IndexOf("-");
+
+            // If it exist, split the string
+            if (index > 0)
+            {
+                String exerciseId = taskContent.Items[taskContent.SelectedIndex].ToString().Substring(0, index);
+
+                _filename = "DATA/PATIENT_" + _patient.Id + "/TASK_" + _task.Id + "/EXERCISE_" + exerciseId;
+
+                if (File.Exists(_filename))
+                {
+                    _bodyJointsList.Clear();
+
+                    using (StreamReader streamReader = new StreamReader(_filename))
+                    {
+                        BodyJoints bodyJoints = null;
+                        String line = null;
+                        int count = 0;
+
+                        // Read and display lines from the file until the end of the file is reached
+                        while ((line = streamReader.ReadLine()) != null)
+                        {
+                            String[] words = line.Split(' ');
+
+                            if (count == 0)
+                            {
+                                bodyJoints = new BodyJoints();
+                            }
+
+                            Joint joint = new Joint();
+                            joint.Position.X = (float)Double.Parse(words[2]);
+                            joint.Position.Y = (float)Double.Parse(words[3]);
+
+                            bodyJoints.BodyJointsDictionary.Add(words[1], joint);
+                            count++;
+
+                            if (count == 25)
+                            {
+                                _bodyJointsList.Add(bodyJoints);
+
+                                count = 0;
+                            }
+                        }
+                    }
+                }
+            }
 
             if (_bodyJointsList.Count != 0)
             {
@@ -478,8 +626,12 @@ namespace KINECT_APPLICATION
                     if (frameNumber == bodyJointsListSize)
                     {
                         taskContent.IsEnabled = true;
-
                         Replay.IsEnabled = true;
+
+                        if (_task.ExerciseList[taskContent.SelectedIndex].Status == 0)
+                        {
+                            Finish.IsEnabled = true;
+                        }
 
                         timer.Stop();
 
@@ -497,8 +649,78 @@ namespace KINECT_APPLICATION
             else
             {
                 taskContent.IsEnabled = true;
+                Replay.IsEnabled = true;
             }
         }
+
+
+
+        private void Finish_Click(object sender, RoutedEventArgs e)
+        {
+            Finish.IsEnabled = false;
+
+            int selectedIndex = taskContent.SelectedIndex;
+
+
+            _task.ExerciseList[selectedIndex].Pain = double.Parse(Pain.Text);
+            _task.ExerciseList[selectedIndex].Fatigue = double.Parse(Fatigue.Text);
+            _task.ExerciseList[selectedIndex].Mood = double.Parse(Mood.Text);
+
+            // Update the current exercise's status to 1
+            _databaseConnection.UpdateExerciseRelation(_task.Id, _task.ExerciseList[selectedIndex]);
+
+            taskContent.Items.Clear();
+
+            // Select all the exercises that belongs to the current task from the database
+            _task.ExerciseList = _databaseConnection.SelectExerciseRelations(_task.Id, _patient.Id);
+
+            // Traverse each exercise in the current task
+            for (int i = 0; i < _task.ExerciseList.Count; i++)
+            {
+                if (_task.ExerciseList[i].Status == 1)
+                {
+                    // Add the current exercise to the task list box
+                    taskContent.Items.Add(_task.ExerciseList[i].Id + "-" + _task.ExerciseList[i].Name + "_DONE");
+                }
+                else
+                {
+                    // Add the current exercise to the task list box
+                    taskContent.Items.Add(_task.ExerciseList[i].Id + "-" + _task.ExerciseList[i].Name);
+                }
+            }
+
+            taskContent.SelectedIndex = selectedIndex;
+
+            // Traverse each exercise in the current task
+            for (int i = 0; i < _task.ExerciseList.Count; i++)
+            {
+                // Check if all the exercises are done
+                if (_task.ExerciseList[i].Status == 0)
+                {
+                    // If all exercises are not done, then do not change the task status
+                    return;
+                }
+            }
+
+            // If all exercises are done, then change the task status also to 1
+            _task.Status = "1";
+            _databaseConnection.UpdateTask(_task);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         private void Exit_Click(object sender, RoutedEventArgs e)
         {

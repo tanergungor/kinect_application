@@ -167,26 +167,24 @@ namespace KINECT_APPLICATION
 
         private void LoadImage_Click(object sender, RoutedEventArgs e)
         {
-            // Create Open File Dialog 
+            // Create open file dialog 
             Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog();
 
             // Set filter for file extension and default file extension
             openFileDialog.Filter = "PNG Files (*.png)|*.png";
 
-            // Display OpenFileDialog by calling ShowDialog method 
+            // Display open file dialog by calling show dialog method 
             Nullable<bool> result = openFileDialog.ShowDialog();
 
-            // Get the selected file name and display in a TextBox 
+            // Get the selected file name if it is not not
             if (result == true)
             {
+                // Get the path of the doctor photo
                 _doctor.Photo = openFileDialog.FileName;
-
+                // Set the doctor photo
                 Photo.Source = new BitmapImage(new Uri(openFileDialog.FileName));
             }
         }
-
-
-
 
         // WARNING:: CHECK EMPTY FIELDS!
         private void UpdateDoctor_Click(object sender, RoutedEventArgs e)
