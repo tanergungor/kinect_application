@@ -27,6 +27,7 @@
                 <Label Width="100">Pain</Label>
                 <ProgressBar Name="ProgressPain" Margin="10" Minimum="0" Maximum="10" Value="0.0" Width="125" />
                 <TextBlock Text="{Binding ElementName=ProgressPain, Path=Value, StringFormat={}{0:N2}}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                <Button Margin="10,0,0,0" Name="Clear" Background="White" Click="Clear_Click" Height="25" Width="235">Clear Trajectory</Button>
             </StackPanel>
         </StackPanel>
 

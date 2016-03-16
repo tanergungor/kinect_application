@@ -141,7 +141,10 @@ namespace KINECT_APPLICATION.UserControls
 
 
 
-
+        private void Clear_Click(object sender, RoutedEventArgs e)
+        {
+            oCamera.Children.RemoveRange(0, oCamera.Children.Count);
+        }
 
 
 
@@ -149,6 +152,8 @@ namespace KINECT_APPLICATION.UserControls
         {
             if (_bodyJointsList.Count != 0)
             {
+                oCamera.Children.RemoveRange(0, oCamera.Children.Count);
+
                 int bodyJointsListSize = _bodyJointsList.Count();
 
                 DispatcherTimer timer = new DispatcherTimer
@@ -204,7 +209,7 @@ namespace KINECT_APPLICATION.UserControls
 
         private void SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            oCamera.Children.RemoveRange(0, oCanvas.Children.Count);
+            oCamera.Children.RemoveRange(0, oCamera.Children.Count);
 
             oCanvas.Children.RemoveRange(1, oCanvas.Children.Count);
 
@@ -301,6 +306,8 @@ namespace KINECT_APPLICATION.UserControls
             {
                 // Draw the whole body
                 _instance.Draw(oCanvas, _bodyJointsList.ElementAt(_frameNumber));
+
+                _instance.DrawTrajectory(oCamera, _bodyJointsList.ElementAt(_frameNumber - 1), _bodyJointsList.ElementAt(_frameNumber));
             }
         }
     }
