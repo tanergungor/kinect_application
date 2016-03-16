@@ -61,4 +61,3 @@ C:\Users\Taner\Desktop\kinect_application\KINECT_APPLICATION\obj\Debug\KINECT_AP
 C:\Users\Taner\Desktop\kinect_application\KINECT_APPLICATION\obj\Debug\KINECT_APPLICATION.csproj.GenerateResource.Cache
 C:\Users\Taner\Desktop\kinect_application\KINECT_APPLICATION\obj\Debug\KINECT_APPLICATION.exe
 C:\Users\Taner\Desktop\kinect_application\KINECT_APPLICATION\obj\Debug\KINECT_APPLICATION.pdb
-C:\Users\Taner\Desktop\kinect_application\KINECT_APPLICATION\obj\Debug\KINECT_APPLICATION.csprojResolveAssemblyReference.cache

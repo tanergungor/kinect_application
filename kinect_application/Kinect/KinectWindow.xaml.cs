@@ -159,18 +159,112 @@ namespace KINECT_APPLICATION
 
 
 
+        public void DrawTrajectory(Canvas canvas, BodyJoints fBody, BodyJoints sBody)
+        {
+            if (fBody != null && sBody != null)
+            {
+                if (fBody.BodyJointsDictionary.ContainsKey(JointType.Head.ToString()) && sBody.BodyJointsDictionary.ContainsKey(JointType.Head.ToString()))
+                {
+                    DrawLine(canvas, fBody.BodyJointsDictionary[JointType.Head.ToString()], sBody.BodyJointsDictionary[JointType.Head.ToString()], Brushes.Black, 1);
+                }
+
+                if (fBody.BodyJointsDictionary.ContainsKey(JointType.Neck.ToString()) && sBody.BodyJointsDictionary.ContainsKey(JointType.Neck.ToString()))
+                {
+                    DrawLine(canvas, fBody.BodyJointsDictionary[JointType.Neck.ToString()], sBody.BodyJointsDictionary[JointType.Neck.ToString()], Brushes.Black, 1);
+                }
+
+                if (fBody.BodyJointsDictionary.ContainsKey(JointType.SpineShoulder.ToString()) && sBody.BodyJointsDictionary.ContainsKey(JointType.SpineShoulder.ToString()))
+                {
+                    DrawLine(canvas, fBody.BodyJointsDictionary[JointType.SpineShoulder.ToString()], sBody.BodyJointsDictionary[JointType.SpineShoulder.ToString()], Brushes.Black, 1);
+                }
+
+                if (fBody.BodyJointsDictionary.ContainsKey(JointType.ShoulderRight.ToString()) && sBody.BodyJointsDictionary.ContainsKey(JointType.ShoulderRight.ToString()))
+                {
+                    DrawLine(canvas, fBody.BodyJointsDictionary[JointType.ShoulderRight.ToString()], sBody.BodyJointsDictionary[JointType.ShoulderRight.ToString()], Brushes.Black, 1);
+                }
+
+                if (fBody.BodyJointsDictionary.ContainsKey(JointType.ShoulderLeft.ToString()) && sBody.BodyJointsDictionary.ContainsKey(JointType.ShoulderLeft.ToString()))
+                {
+                    DrawLine(canvas, fBody.BodyJointsDictionary[JointType.ShoulderLeft.ToString()], sBody.BodyJointsDictionary[JointType.ShoulderLeft.ToString()], Brushes.Black, 1);
+                }
+
+                if (fBody.BodyJointsDictionary.ContainsKey(JointType.SpineBase.ToString()) && sBody.BodyJointsDictionary.ContainsKey(JointType.SpineBase.ToString()))
+                {
+                    DrawLine(canvas, fBody.BodyJointsDictionary[JointType.SpineBase.ToString()], sBody.BodyJointsDictionary[JointType.SpineBase.ToString()], Brushes.Black, 1);
+                }
+
+                if (fBody.BodyJointsDictionary.ContainsKey(JointType.SpineMid.ToString()) && sBody.BodyJointsDictionary.ContainsKey(JointType.SpineMid.ToString()))
+                {
+                    DrawLine(canvas, fBody.BodyJointsDictionary[JointType.SpineMid.ToString()], sBody.BodyJointsDictionary[JointType.SpineMid.ToString()], Brushes.Black, 1);
+                }
+
+                if (fBody.BodyJointsDictionary.ContainsKey(JointType.ElbowLeft.ToString()) && sBody.BodyJointsDictionary.ContainsKey(JointType.ElbowLeft.ToString()))
+                {
+                    DrawLine(canvas, fBody.BodyJointsDictionary[JointType.ElbowLeft.ToString()], sBody.BodyJointsDictionary[JointType.ElbowLeft.ToString()], Brushes.Black, 1);
+                }
+
+                if (fBody.BodyJointsDictionary.ContainsKey(JointType.WristLeft.ToString()) && sBody.BodyJointsDictionary.ContainsKey(JointType.WristLeft.ToString()))
+                {
+                    DrawLine(canvas, fBody.BodyJointsDictionary[JointType.WristLeft.ToString()], sBody.BodyJointsDictionary[JointType.WristLeft.ToString()], Brushes.Black, 1);
+                }
+
+                if (fBody.BodyJointsDictionary.ContainsKey(JointType.ElbowRight.ToString()) && sBody.BodyJointsDictionary.ContainsKey(JointType.ElbowRight.ToString()))
+                {
+                    DrawLine(canvas, fBody.BodyJointsDictionary[JointType.ElbowRight.ToString()], sBody.BodyJointsDictionary[JointType.ElbowRight.ToString()], Brushes.Black, 1);
+                }
+
+                if (fBody.BodyJointsDictionary.ContainsKey(JointType.WristRight.ToString()) && sBody.BodyJointsDictionary.ContainsKey(JointType.WristRight.ToString()))
+                {
+                    DrawLine(canvas, fBody.BodyJointsDictionary[JointType.WristRight.ToString()], sBody.BodyJointsDictionary[JointType.WristRight.ToString()], Brushes.Black, 1);
+                }
+
+                if (fBody.BodyJointsDictionary.ContainsKey(JointType.HipLeft.ToString()) && sBody.BodyJointsDictionary.ContainsKey(JointType.HipLeft.ToString()))
+                {
+                    DrawLine(canvas, fBody.BodyJointsDictionary[JointType.HipLeft.ToString()], sBody.BodyJointsDictionary[JointType.HipLeft.ToString()], Brushes.Black, 1);
+                }
+
+                if (fBody.BodyJointsDictionary.ContainsKey(JointType.HipRight.ToString()) && sBody.BodyJointsDictionary.ContainsKey(JointType.HipRight.ToString()))
+                {
+                    DrawLine(canvas, fBody.BodyJointsDictionary[JointType.HipRight.ToString()], sBody.BodyJointsDictionary[JointType.HipRight.ToString()], Brushes.Black, 1);
+                }
+
+                if (fBody.BodyJointsDictionary.ContainsKey(JointType.KneeLeft.ToString()) && sBody.BodyJointsDictionary.ContainsKey(JointType.KneeLeft.ToString()))
+                {
+                    DrawLine(canvas, fBody.BodyJointsDictionary[JointType.KneeLeft.ToString()], sBody.BodyJointsDictionary[JointType.KneeLeft.ToString()], Brushes.Black, 1);
+                }
+
+                if (fBody.BodyJointsDictionary.ContainsKey(JointType.KneeRight.ToString()) && sBody.BodyJointsDictionary.ContainsKey(JointType.KneeRight.ToString()))
+                {
+                    DrawLine(canvas, fBody.BodyJointsDictionary[JointType.KneeRight.ToString()], sBody.BodyJointsDictionary[JointType.KneeRight.ToString()], Brushes.Black, 1);
+                }
+
+                if (fBody.BodyJointsDictionary.ContainsKey(JointType.AnkleLeft.ToString()) && sBody.BodyJointsDictionary.ContainsKey(JointType.AnkleLeft.ToString()))
+                {
+                    DrawLine(canvas, fBody.BodyJointsDictionary[JointType.AnkleLeft.ToString()], sBody.BodyJointsDictionary[JointType.AnkleLeft.ToString()], Brushes.Black, 1);
+                }
+
+                if (fBody.BodyJointsDictionary.ContainsKey(JointType.AnkleRight.ToString()) && sBody.BodyJointsDictionary.ContainsKey(JointType.AnkleRight.ToString()))
+                {
+                    DrawLine(canvas, fBody.BodyJointsDictionary[JointType.AnkleRight.ToString()], sBody.BodyJointsDictionary[JointType.AnkleRight.ToString()], Brushes.Black, 1);
+                }
+            }
+        }
 
 
 
 
-        public void DrawLine(Canvas canvas, Joint newF, Joint newS, SolidColorBrush colorBrush)
+
+
+
+
+        public void DrawLine(Canvas canvas, Joint newF, Joint newS, SolidColorBrush colorBrush, int markerSize)
         {
             if (newF.Position.X < canvas.Width && 
                 newF.Position.Y < canvas.Height && 
                 newF.Position.X > 0 && 
                 newF.Position.Y > 0)
             {
-                Ellipse ellipse = new Ellipse { Fill = colorBrush, Width = 10, Height = 10 };
+                Ellipse ellipse = new Ellipse { Fill = colorBrush, Width = markerSize, Height = markerSize };
                 Canvas.SetLeft(ellipse, newF.Position.X - ellipse.Width / 2);
                 Canvas.SetTop(ellipse, newF.Position.Y - ellipse.Height / 2);
                 canvas.Children.Add(ellipse);
@@ -181,7 +275,7 @@ namespace KINECT_APPLICATION
                 newS.Position.X > 0 && 
                 newS.Position.Y > 0)
             {
-                Ellipse ellipse = new Ellipse { Fill = colorBrush, Width = 10, Height = 10 };
+                Ellipse ellipse = new Ellipse { Fill = colorBrush, Width = markerSize, Height = markerSize };
                 Canvas.SetLeft(ellipse, newS.Position.X - ellipse.Width / 2);
                 Canvas.SetTop(ellipse, newS.Position.Y - ellipse.Height / 2);
                 canvas.Children.Add(ellipse);
@@ -196,7 +290,7 @@ namespace KINECT_APPLICATION
                 newS.Position.X > 0 && 
                 newS.Position.Y > 0)
             {
-                Line line = new Line { X1 = newF.Position.X, Y1 = newF.Position.Y, X2 = newS.Position.X, Y2 = newS.Position.Y, StrokeThickness = 5, Stroke = colorBrush };
+                Line line = new Line { X1 = newF.Position.X, Y1 = newF.Position.Y, X2 = newS.Position.X, Y2 = newS.Position.Y, StrokeThickness = (markerSize / 2), Stroke = colorBrush };
                 canvas.Children.Add(line);
             }
         }
@@ -207,82 +301,82 @@ namespace KINECT_APPLICATION
             {
                 if (body.BodyJointsDictionary.ContainsKey(JointType.Head.ToString()) && body.BodyJointsDictionary.ContainsKey(JointType.Neck.ToString()))
                 {
-                    DrawLine(canvas, body.BodyJointsDictionary[JointType.Head.ToString()], body.BodyJointsDictionary[JointType.Neck.ToString()], Brushes.Red);
+                    DrawLine(canvas, body.BodyJointsDictionary[JointType.Head.ToString()], body.BodyJointsDictionary[JointType.Neck.ToString()], Brushes.Red, 10);
                 }
 
                 if (body.BodyJointsDictionary.ContainsKey(JointType.Neck.ToString()) && body.BodyJointsDictionary.ContainsKey(JointType.SpineShoulder.ToString()))
                 {
-                    DrawLine(canvas, body.BodyJointsDictionary[JointType.Neck.ToString()], body.BodyJointsDictionary[JointType.SpineShoulder.ToString()], Brushes.Red);
+                    DrawLine(canvas, body.BodyJointsDictionary[JointType.Neck.ToString()], body.BodyJointsDictionary[JointType.SpineShoulder.ToString()], Brushes.Red, 10);
                 }
 
                 if (body.BodyJointsDictionary.ContainsKey(JointType.SpineShoulder.ToString()) && body.BodyJointsDictionary.ContainsKey(JointType.ShoulderLeft.ToString()))
                 {
-                    DrawLine(canvas, body.BodyJointsDictionary[JointType.SpineShoulder.ToString()], body.BodyJointsDictionary[JointType.ShoulderLeft.ToString()], Brushes.Red);
+                    DrawLine(canvas, body.BodyJointsDictionary[JointType.SpineShoulder.ToString()], body.BodyJointsDictionary[JointType.ShoulderLeft.ToString()], Brushes.Red, 10);
                 }
 
                 if (body.BodyJointsDictionary.ContainsKey(JointType.SpineShoulder.ToString()) && body.BodyJointsDictionary.ContainsKey(JointType.ShoulderRight.ToString()))
                 {
-                    DrawLine(canvas, body.BodyJointsDictionary[JointType.SpineShoulder.ToString()], body.BodyJointsDictionary[JointType.ShoulderRight.ToString()], Brushes.Red);
+                    DrawLine(canvas, body.BodyJointsDictionary[JointType.SpineShoulder.ToString()], body.BodyJointsDictionary[JointType.ShoulderRight.ToString()], Brushes.Red, 10);
                 }
 
                 if (body.BodyJointsDictionary.ContainsKey(JointType.SpineShoulder.ToString()) && body.BodyJointsDictionary.ContainsKey(JointType.SpineMid.ToString()))
                 {
-                    DrawLine(canvas, body.BodyJointsDictionary[JointType.SpineShoulder.ToString()], body.BodyJointsDictionary[JointType.SpineMid.ToString()], Brushes.Green);
+                    DrawLine(canvas, body.BodyJointsDictionary[JointType.SpineShoulder.ToString()], body.BodyJointsDictionary[JointType.SpineMid.ToString()], Brushes.Green, 10);
                 }
 
                 if (body.BodyJointsDictionary.ContainsKey(JointType.ShoulderLeft.ToString()) && body.BodyJointsDictionary.ContainsKey(JointType.ElbowLeft.ToString()))
                 {
-                    DrawLine(canvas, body.BodyJointsDictionary[JointType.ShoulderLeft.ToString()], body.BodyJointsDictionary[JointType.ElbowLeft.ToString()], Brushes.Red);
+                    DrawLine(canvas, body.BodyJointsDictionary[JointType.ShoulderLeft.ToString()], body.BodyJointsDictionary[JointType.ElbowLeft.ToString()], Brushes.Red, 10);
                 }
 
                 if (body.BodyJointsDictionary.ContainsKey(JointType.ShoulderRight.ToString()) && body.BodyJointsDictionary.ContainsKey(JointType.ElbowRight.ToString()))
                 {
-                    DrawLine(canvas, body.BodyJointsDictionary[JointType.ShoulderRight.ToString()], body.BodyJointsDictionary[JointType.ElbowRight.ToString()], Brushes.Red);
+                    DrawLine(canvas, body.BodyJointsDictionary[JointType.ShoulderRight.ToString()], body.BodyJointsDictionary[JointType.ElbowRight.ToString()], Brushes.Red, 10);
                 }
 
                 if (body.BodyJointsDictionary.ContainsKey(JointType.ElbowLeft.ToString()) && body.BodyJointsDictionary.ContainsKey(JointType.WristLeft.ToString()))
                 {
-                    DrawLine(canvas, body.BodyJointsDictionary[JointType.ElbowLeft.ToString()], body.BodyJointsDictionary[JointType.WristLeft.ToString()], Brushes.Red);
+                    DrawLine(canvas, body.BodyJointsDictionary[JointType.ElbowLeft.ToString()], body.BodyJointsDictionary[JointType.WristLeft.ToString()], Brushes.Red, 10);
                 }
 
                 if (body.BodyJointsDictionary.ContainsKey(JointType.ElbowRight.ToString()) && body.BodyJointsDictionary.ContainsKey(JointType.WristRight.ToString()))
                 {
-                    DrawLine(canvas, body.BodyJointsDictionary[JointType.ElbowRight.ToString()], body.BodyJointsDictionary[JointType.WristRight.ToString()], Brushes.Red);
+                    DrawLine(canvas, body.BodyJointsDictionary[JointType.ElbowRight.ToString()], body.BodyJointsDictionary[JointType.WristRight.ToString()], Brushes.Red, 10);
                 }
 
                 if (body.BodyJointsDictionary.ContainsKey(JointType.SpineMid.ToString()) && body.BodyJointsDictionary.ContainsKey(JointType.SpineBase.ToString()))
                 {
-                    DrawLine(canvas, body.BodyJointsDictionary[JointType.SpineMid.ToString()], body.BodyJointsDictionary[JointType.SpineBase.ToString()], Brushes.Green);
+                    DrawLine(canvas, body.BodyJointsDictionary[JointType.SpineMid.ToString()], body.BodyJointsDictionary[JointType.SpineBase.ToString()], Brushes.Green, 10);
                 }
 
                 if (body.BodyJointsDictionary.ContainsKey(JointType.SpineBase.ToString()) && body.BodyJointsDictionary.ContainsKey(JointType.HipLeft.ToString()))
                 {
-                    DrawLine(canvas, body.BodyJointsDictionary[JointType.SpineBase.ToString()], body.BodyJointsDictionary[JointType.HipLeft.ToString()], Brushes.Red);
+                    DrawLine(canvas, body.BodyJointsDictionary[JointType.SpineBase.ToString()], body.BodyJointsDictionary[JointType.HipLeft.ToString()], Brushes.Red, 10);
                 }
 
                 if (body.BodyJointsDictionary.ContainsKey(JointType.SpineBase.ToString()) && body.BodyJointsDictionary.ContainsKey(JointType.HipRight.ToString()))
                 {
-                    DrawLine(canvas, body.BodyJointsDictionary[JointType.SpineBase.ToString()], body.BodyJointsDictionary[JointType.HipRight.ToString()], Brushes.Red);
+                    DrawLine(canvas, body.BodyJointsDictionary[JointType.SpineBase.ToString()], body.BodyJointsDictionary[JointType.HipRight.ToString()], Brushes.Red, 10);
                 }
 
                 if (body.BodyJointsDictionary.ContainsKey(JointType.HipLeft.ToString()) && body.BodyJointsDictionary.ContainsKey(JointType.KneeLeft.ToString()))
                 {
-                    DrawLine(canvas, body.BodyJointsDictionary[JointType.HipLeft.ToString()], body.BodyJointsDictionary[JointType.KneeLeft.ToString()], Brushes.Red);
+                    DrawLine(canvas, body.BodyJointsDictionary[JointType.HipLeft.ToString()], body.BodyJointsDictionary[JointType.KneeLeft.ToString()], Brushes.Red, 10);
                 }
 
                 if (body.BodyJointsDictionary.ContainsKey(JointType.HipRight.ToString()) && body.BodyJointsDictionary.ContainsKey(JointType.KneeRight.ToString()))
                 {
-                    DrawLine(canvas, body.BodyJointsDictionary[JointType.HipRight.ToString()], body.BodyJointsDictionary[JointType.KneeRight.ToString()], Brushes.Red);
+                    DrawLine(canvas, body.BodyJointsDictionary[JointType.HipRight.ToString()], body.BodyJointsDictionary[JointType.KneeRight.ToString()], Brushes.Red, 10);
                 }
 
                 if (body.BodyJointsDictionary.ContainsKey(JointType.KneeLeft.ToString()) && body.BodyJointsDictionary.ContainsKey(JointType.AnkleLeft.ToString()))
                 {
-                    DrawLine(canvas, body.BodyJointsDictionary[JointType.KneeLeft.ToString()], body.BodyJointsDictionary[JointType.AnkleLeft.ToString()], Brushes.Red);
+                    DrawLine(canvas, body.BodyJointsDictionary[JointType.KneeLeft.ToString()], body.BodyJointsDictionary[JointType.AnkleLeft.ToString()], Brushes.Red, 10);
                 }
 
                 if (body.BodyJointsDictionary.ContainsKey(JointType.KneeRight.ToString()) && body.BodyJointsDictionary.ContainsKey(JointType.AnkleRight.ToString()))
                 {
-                    DrawLine(canvas, body.BodyJointsDictionary[JointType.KneeRight.ToString()], body.BodyJointsDictionary[JointType.AnkleRight.ToString()], Brushes.Red);
+                    DrawLine(canvas, body.BodyJointsDictionary[JointType.KneeRight.ToString()], body.BodyJointsDictionary[JointType.AnkleRight.ToString()], Brushes.Red, 10);
                 }
             }
         }
@@ -606,6 +700,8 @@ namespace KINECT_APPLICATION
                                 count = 0;
                             }
                         }
+
+                        streamReader.Close();
                     }
                 }
             }
@@ -665,6 +761,8 @@ namespace KINECT_APPLICATION
             _task.ExerciseList[selectedIndex].Pain = double.Parse(Pain.Text);
             _task.ExerciseList[selectedIndex].Fatigue = double.Parse(Fatigue.Text);
             _task.ExerciseList[selectedIndex].Mood = double.Parse(Mood.Text);
+
+            // CALCULATE RESULT!
 
             // Update the current exercise's status to 1
             _databaseConnection.UpdateExerciseRelation(_task.Id, _task.ExerciseList[selectedIndex]);

@@ -43,7 +43,7 @@ namespace KINECT_APPLICATION
             // Set the doctor object
             _doctor = doctor;
             // Set the file path
-            _filename = "C:/Users/Taner/Desktop/kinect_application/kinect_application/Resources/PHOTOS/PROFILE.png";
+            _filename = System.AppDomain.CurrentDomain.BaseDirectory + "/RESOURCES/PHOTOS/PROFILE.png";
         }
 
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
@@ -105,11 +105,12 @@ namespace KINECT_APPLICATION
             {
                 String patientId = _databaseConnection.SelectLastInsertedPatient();
 
-                using (var fileStream = new FileStream(System.IO.Path.Combine("C:/Users/Taner/Desktop/kinect_application/kinect_application/Resources/PHOTOS/", patientId + ".png"), FileMode.Create))
+                using (var fileStream = new FileStream(System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory + "/RESOURCES/PHOTOS/", patientId + ".png"), FileMode.Create))
                 {
                     BitmapEncoder encoder = new PngBitmapEncoder();
                     encoder.Frames.Add(BitmapFrame.Create(new Uri(_filename)));
                     encoder.Save(fileStream);
+                    fileStream.Close();
                 }
 
                 // If the patient's information is inserted, show the message

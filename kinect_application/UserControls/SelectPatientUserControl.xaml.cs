@@ -42,6 +42,8 @@ namespace KINECT_APPLICATION
         // Create a mood value for progress bar
         private Double _mood = 0;
 
+        private BitmapImage _profileImage = null;
+
         internal SelectPatientUserControl(Person doctor, Person patient)
         {
             InitializeComponent();
@@ -55,7 +57,13 @@ namespace KINECT_APPLICATION
             // Set the patient surname
             Surname.Text = _patient.Surname;
             // Set the patient photo
-            Photo.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/PHOTOS/" + _patient.Id + ".png"));
+            _profileImage = new BitmapImage();
+            _profileImage.BeginInit();
+            _profileImage.CacheOption = BitmapCacheOption.OnLoad;
+            _profileImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
+            _profileImage.UriSource = new Uri(System.AppDomain.CurrentDomain.BaseDirectory + "/RESOURCES/PHOTOS/" + _patient.Id + ".png");
+            _profileImage.EndInit();
+            Photo.Source = _profileImage;
             // Set the patient height
             Phone.Text = _patient.Phone;
             // Set the patient weight
@@ -133,9 +141,22 @@ namespace KINECT_APPLICATION
             // Get the selected row from the task list
             DataRowView dataRow = (DataRowView)taskList.SelectedItem;
             // Get the task id whose index value is 0
-            String taskID = dataRow.Row.ItemArray[0].ToString();
+            String taskId = dataRow.Row.ItemArray[0].ToString();
             // Select the task from the database according to the patient id
-            Task task = _databaseConnection.SelectTask(taskID, _patient.Id);
+            Task task = _databaseConnection.SelectTask(taskId, _patient.Id);
+
+            List<Exercise> exerciseList = _databaseConnection.SelectExerciseRelations(taskId, _patient.Id);
+
+            // Traverse each exercise in the current task
+            for (int i = 0; i < exerciseList.Count; i++)
+            {
+                if (exerciseList[i].Status != 0)
+                {
+                    MessageBox.Show("Task has been started to be performed, You cannot update it! Try to finish or delete it!");
+
+                    return;
+                }
+            }
 
             // Delete the children of the main window content
             MainWindow.MainWindowContent.Children.Clear();
@@ -268,11 +289,12 @@ namespace KINECT_APPLICATION
             // If the patient's information is updated
             if (IsUpdated)
             {
-                using (var fileStream = new FileStream(System.IO.Path.Combine("C:/Users/Taner/Desktop/kinect_application/kinect_application/Resources/PHOTOS/", _patient.Id + ".png"), FileMode.Create))
+                using (var fileStream = new FileStream(System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory + "/RESOURCES/PHOTOS/", _patient.Id + ".png"), FileMode.Create))
                 {
                     BitmapEncoder encoder = new PngBitmapEncoder();
                     encoder.Frames.Add(BitmapFrame.Create(new Uri(_patient.Photo)));
                     encoder.Save(fileStream);
+                    fileStream.Close();
                 }
 
                 // If the patient's information is updated, show the message

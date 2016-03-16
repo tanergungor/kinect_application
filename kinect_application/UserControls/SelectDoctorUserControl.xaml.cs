@@ -35,6 +35,8 @@ namespace KINECT_APPLICATION
         // Create a doctor object
         private Person _doctor = null;
 
+        private BitmapImage _profileImage = null;
+
         internal SelectDoctorUserControl(Person doctor)
         {
             InitializeComponent();
@@ -46,7 +48,13 @@ namespace KINECT_APPLICATION
             // Set the doctor surname
             Surname.Text = _doctor.Surname;
             // Set the doctor photo
-            Photo.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/PHOTOS/" + _doctor.Id + ".png"));
+            _profileImage = new BitmapImage();
+            _profileImage.BeginInit();
+            _profileImage.CacheOption = BitmapCacheOption.OnLoad;
+            _profileImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
+            _profileImage.UriSource = new Uri(System.AppDomain.CurrentDomain.BaseDirectory + "/RESOURCES/PHOTOS/" + _doctor.Id + ".png");
+            _profileImage.EndInit();
+            Photo.Source = _profileImage;
             // Set the doctor phone
             Phone.Text = _doctor.Phone;
             // Set the doctor e-mail
@@ -126,7 +134,7 @@ namespace KINECT_APPLICATION
                 if (IsDeleted)
                 {
                     // Delete the patient photo 
-                    File.Delete(System.IO.Path.Combine("C:/Users/Taner/Desktop/kinect_application/kinect_application/Resources/PHOTOS/", patientId + ".png"));
+                    File.Delete(System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory + "/RESOURCES/PHOTOS/", patientId + ".png"));
 
                     // If the patient is deleted, show the message
                     MessageBox.Show("DELETE: Successful - The patient is deleted!");
@@ -212,11 +220,12 @@ namespace KINECT_APPLICATION
             // If the doctor's information is updated
             if (IsUpdated)
             {
-                using (var fileStream = new FileStream(System.IO.Path.Combine("C:/Users/Taner/Desktop/kinect_application/kinect_application/Resources/PHOTOS/", _doctor.Id + ".png"), FileMode.Create))
+                using (var fileStream = new FileStream(System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory + "/RESOURCES/PHOTOS/", _doctor.Id + ".png"), FileMode.Create))
                 {
                     BitmapEncoder encoder = new PngBitmapEncoder();
                     encoder.Frames.Add(BitmapFrame.Create(new Uri(_doctor.Photo)));
                     encoder.Save(fileStream);
+                    fileStream.Close();
                 }
 
                 // If the doctor's information is updated, show the message

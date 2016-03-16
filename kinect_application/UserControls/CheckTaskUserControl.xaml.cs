@@ -190,6 +190,11 @@ namespace KINECT_APPLICATION.UserControls
                     // Draw the whole body
                     _instance.Draw(oCanvas, _bodyJointsList.ElementAt(_frameNumber - 1));
 
+                    if(_frameNumber > 1)
+                    {
+                        _instance.DrawTrajectory(oCamera, _bodyJointsList.ElementAt(_frameNumber - 1), _bodyJointsList.ElementAt(_frameNumber));
+                    }
+
                     _frameNumber++;
                 };
 
@@ -199,6 +204,8 @@ namespace KINECT_APPLICATION.UserControls
 
         private void SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            oCamera.Children.RemoveRange(0, oCanvas.Children.Count);
+
             oCanvas.Children.RemoveRange(1, oCanvas.Children.Count);
 
             _bodyJointsList.Clear();
@@ -258,6 +265,8 @@ namespace KINECT_APPLICATION.UserControls
                             }
 
                             FrameSlider.Maximum = _bodyJointsList.Count;
+
+                            streamReader.Close();
                         }
                     }
                     else
