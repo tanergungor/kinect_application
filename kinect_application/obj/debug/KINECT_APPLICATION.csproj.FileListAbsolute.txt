@@ -34,7 +34,9 @@ C:\Users\Taner\Desktop\kinect_application\KINECT_APPLICATION\bin\Debug\KINECT_AP
 C:\Users\Taner\Desktop\kinect_application\KINECT_APPLICATION\bin\Debug\KINECT_APPLICATION.exe
 C:\Users\Taner\Desktop\kinect_application\KINECT_APPLICATION\bin\Debug\KINECT_APPLICATION.pdb
 C:\Users\Taner\Desktop\kinect_application\KINECT_APPLICATION\bin\Debug\Microsoft.Kinect.dll
+C:\Users\Taner\Desktop\kinect_application\KINECT_APPLICATION\bin\Debug\MySql.Data.dll
 C:\Users\Taner\Desktop\kinect_application\KINECT_APPLICATION\bin\Debug\Microsoft.Kinect.xml
+C:\Users\Taner\Desktop\kinect_application\KINECT_APPLICATION\obj\Debug\KINECT_APPLICATION.csprojResolveAssemblyReference.cache
 C:\Users\Taner\Desktop\kinect_application\KINECT_APPLICATION\obj\Debug\UserControls\InsertPatientUserControl.g.cs
 C:\Users\Taner\Desktop\kinect_application\KINECT_APPLICATION\obj\Debug\Kinect\KinectWindow.g.cs
 C:\Users\Taner\Desktop\kinect_application\KINECT_APPLICATION\obj\Debug\UserControls\SelectTaskUserControl.g.cs
@@ -61,4 +63,3 @@ C:\Users\Taner\Desktop\kinect_application\KINECT_APPLICATION\obj\Debug\KINECT_AP
 C:\Users\Taner\Desktop\kinect_application\KINECT_APPLICATION\obj\Debug\KINECT_APPLICATION.csproj.GenerateResource.Cache
 C:\Users\Taner\Desktop\kinect_application\KINECT_APPLICATION\obj\Debug\KINECT_APPLICATION.exe
 C:\Users\Taner\Desktop\kinect_application\KINECT_APPLICATION\obj\Debug\KINECT_APPLICATION.pdb
-C:\Users\Taner\Desktop\kinect_application\KINECT_APPLICATION\obj\Debug\KINECT_APPLICATION.csprojResolveAssemblyReference.cache
